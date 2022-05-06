@@ -1,0 +1,60 @@
+﻿@model IEnumerable<TestingAppQa.Models.Sprint>
+
+<div class="content">
+    <div class="d-flex justify-content-between">
+        <!-- Animated -->
+        <h3 class="text-secondary">Sprints</h3>
+        <div>
+            <div id="PlaceHolderHere">
+
+            </div>
+<a onclick="showInPopup('@Url.Action("Create", "Sprints", null,Context.Request.Scheme)', 'Sprint Nuevo')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nuevo Sprint</a>
+
+
+            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#nuevomember"> <i class="fa fa-users"></i> Invite</button>
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
+                        <div>
+                            <i class="fa fa-check " data-toggle="modal" data-target="#exampleModal"></i>
+                            <i class="fa fa-pencil" data-toggle="modal" data-target="#exampleModal"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div><!-- /# column -->
+            <div class="col-lg-4 ">
+                <div class="card pb-2">
+                    <div class="card-body d-flex justify-content-around">
+
+                        <div>
+
+                            <p>Members</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div><!-- /# column -->
+
+        </div>
+    }
+
+
+
+    <!-- .animated -->
+</div>
+@section scripts{
+    <script src="~/js/modales/modales.js"></script> }
