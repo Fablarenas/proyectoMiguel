@@ -8,10 +8,11 @@
             <div id="PlaceHolderHere">
 
             </div>
-<a onclick="showInPopup('@Url.Action("Create", "Sprints", null,Context.Request.Scheme)', 'Sprint Nuevo')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nuevo Sprint</a>
+            <a onclick="showInPopup('@Url.Action("Create", "Sprints", null,Context.Request.Scheme)', 'Sprint Nuevo')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nuevo Sprint</a>
 
+            <a onclick="showInPopup('@Url.Action("Invite", "Sprints", null,Context.Request.Scheme)', 'Invitar Usuario')" class="btn btn-outline-danger"><i class="fa fa-users"></i>Invitar</a>
 
-            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#nuevomember"> <i class="fa fa-users"></i> Invite</button>
+            @*<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#nuevomember"> <i class="fa fa-users"></i> Invite</button>*@
         </div>
     </div>
 
@@ -27,8 +28,9 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </div>
                         <div>
-                            <i class="fa fa-check " data-toggle="modal" data-target="#exampleModal"></i>
-                            <i class="fa fa-pencil" data-toggle="modal" data-target="#exampleModal"></i>
+                            <i onclick="showInPopup('@Url.Action("Edit","Sprints",new {id=item.IdSprint},Context.Request.Scheme)','Modificar Informacion General Del Sprint')" class="fa fa-pencil"></i>
+                            <input onchange="cambiarSprint(@item.IdSprint)" class="cartItem"
+                                   type="checkbox" value="false">
                         </div>
 
                     </div>
@@ -56,5 +58,15 @@
 
     <!-- .animated -->
 </div>
+<script>
+
+    cambiarSprint = (idSprint) => {
+
+        $.post("@Url.Action("SelectSprint", "Sprints")?idsprint=" + idSprint,function(re){
+
+         //redirect now
+         window.location.href="@Url.Action("Index", "UserHistories")";
+     });
+}</script>
 @section scripts{
     <script src="~/js/modales/modales.js"></script> }

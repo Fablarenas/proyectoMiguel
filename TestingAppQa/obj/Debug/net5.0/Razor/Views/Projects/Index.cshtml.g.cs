@@ -27,7 +27,7 @@ using TestingAppQa.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6928ecb42f93d0a4d9bb48b0fa8322a5a033fe86", @"/Views/Projects/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"5439faa0bb0be046417d68fc14cddc50a9df2a3a", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"aa45cb5f86709dc92e5e3357b0a74ffbe3860d20", @"/Views/_ViewImports.cshtml")]
     public class Views_Projects_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<TestingAppQa.Models.Project>>
     {
         #pragma warning disable 1998

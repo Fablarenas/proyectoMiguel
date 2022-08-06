@@ -1,0 +1,35 @@
+﻿@model TestingAppQa.Models.UserHistory
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = null;
+}
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="TestType" class="control-label"></label>
+                    <input asp-for="TestType" class="form-control" />
+                    <span asp-validation-for="TestType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DescriptionTestType" class="control-label"></label>
+                    <input asp-for="DescriptionTestType" class="form-control" />
+                    <span asp-validation-for="DescriptionTestType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class=" d-flex justify-content-between p-2 form-group">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Confirmar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

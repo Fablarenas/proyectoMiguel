@@ -13,6 +13,9 @@ namespace TestingAppQa.Models
         public string Pass { get; set; }
 
         public int IdProjectActive { get; set; }
+        public int IdSprintActive { get; set; }
+
+        public int IdHUActive { get; set; }
 
         public List<ProjectUser> ProjectUsers { get; set; }
     }

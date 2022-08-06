@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TestingAppQa.Models.UserHistory>
+
+<div class="content">
+    <div class="d-flex justify-content-between">
+        <!-- Animated -->
+        <h3 class="text-secondary">Modulo de Tipos de prueba</h3>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body ">
+
+
+                    <div class="table-stats order-table ov-h">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="serial">Historia de Usuario</th>
+                                    <th class="avatar">Tipo de prueba</th>
+                                    <th>Descripcion</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td class="serial">@Html.DisplayFor(modelItem => item.Title)</td>
+                                        <td class="serial">@Html.DisplayFor(modelItem => item.TestType)</td>
+                                        <td class="serial">@Html.DisplayFor(modelItem => item.DescriptionTestType)</td>
+                                        <td class="serial">
+                                            <a>
+                                                <i class="fa fa-pencil" onclick="showInPopup('@Url.Action("Edit","UserHistoriesTestType",new {id=item.IdUserHistory},Context.Request.Scheme)','')" class="fa fa-pencil p-2">
+                                                </i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- /# column -->
+
+
+    </div>
+    <!-- .animated -->
+</div>
+@section scripts{
+    <script src="~/js/modales/modales.js"></script> }

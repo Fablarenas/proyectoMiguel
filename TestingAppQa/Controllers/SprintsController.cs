@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,29 @@ namespace TestingAppQa.Controllers
     public class SprintsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public SprintsController(ApplicationDbContext context)
+        private readonly UserManager<User> _userManager;
+        public SprintsController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Sprints
         public async Task<IActionResult> Index()
         {
-            return View(await _context.sprint.ToListAsync());
+            var user = await _userManager.GetUserAsync(User);
+            if (user.IdProjectActive != 0)
+            {
+                List<Sprint> projects = await (from s in _context.sprint
+                                               where s.Project.IdProject == user.IdProjectActive
+                                               select s).ToListAsync();
+                return View(projects);
+            }
+            else
+            {
+                return View("SeleccionarProyecto");
+            }
+
         }
 
         // GET: Sprints/Details/5
@@ -49,6 +63,10 @@ namespace TestingAppQa.Controllers
             return View();
         }
 
+        public IActionResult Invite()
+        {
+            return View();
+        }
         // POST: Sprints/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -56,9 +74,12 @@ namespace TestingAppQa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdSprint,Name")] Sprint sprint)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var proyecto = _context.Project.Find(user.IdProjectActive);
+            sprint.Project = proyecto;
             if (ModelState.IsValid)
             {
-                _context.Add(sprint);
+                _context.sprint.Add(sprint);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -148,6 +169,43 @@ namespace TestingAppQa.Controllers
         private bool SprintExists(int id)
         {
             return _context.sprint.Any(e => e.IdSprint == id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Invite([Bind("User,Rols")] ProjectUser projectUser)
+        {
+            var user = await _userManager.GetUserAsync(User); 
+            var usuarioAdd = await _context.user.FirstOrDefaultAsync(x => x.Email == projectUser.User.Email);
+
+            var projectAdd = await _context.Project.FirstOrDefaultAsync(x => x.IdProject == user.IdProjectActive);
+            projectAdd.ProjectUsers = new List<ProjectUser>();
+            var projectUsernew = new ProjectUser { Project = projectAdd, User = usuarioAdd };
+                _context.Add(projectUsernew);
+                await _context.SaveChangesAsync();
+            //var proyecto = _context.Project.Find(user.IdProjectActive);
+            //projectUser.Project = proyecto;
+            //projectUser.User = user;
+            //if (ModelState.IsValid)
+            //{
+            //    _context.ProjectUser.Add(projectUser);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SelectSprint(int idsprint)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            Sprint proyectoselect = _context.sprint.Find(idsprint);
+
+            user.IdSprintActive = proyectoselect.IdSprint;
+            _context.user.Update(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Sprints");
         }
     }
 }

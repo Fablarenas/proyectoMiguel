@@ -1,0 +1,55 @@
+﻿@model TestingAppQa.Models.UserHistory
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>UserHistory</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IWant)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IWant)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Where)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Where)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Then)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Then)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TestType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TestType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DescriptionTestType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DescriptionTestType)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdUserHistory">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -171,8 +171,9 @@ namespace TestingAppQa.Controllers
 
             Project proyectoselect = _context.Project.Find(idproyecto);
 
-            user.IdProjectActive = proyectoselect;
+            user.IdProjectActive = proyectoselect.IdProject;
             _context.user.Update(user);
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Sprints");
             //return View("../Sprints/Index", sprints);
         }

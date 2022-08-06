@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TestingAppQa.Models.Scope>
+
+<div class="content">
+    <div class="d-flex justify-content-between">
+        <!-- Animated -->
+        <h3 class="text-secondary">Alcances</h3>
+
+        <a onclick="showInPopup('@Url.Action("Create", "Risks", null,Context.Request.Scheme)', 'Nuevo Alcance')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nuevo Riesgo</a>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body ">
+
+
+                    <div class="table-stats order-table ov-h">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="serial">Nombre del Alcance</th>
+                                    <th class="avatar">Estrategia de mitigación</th>
+                                    <th>Dependencia</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td class="serial">@Html.DisplayFor(modelItem => item.Name)</td>
+
+                                        <td class="serial">
+                                            <a>
+                                                <i class="fa fa-pencil" onclick="showInPopup('@Url.Action("Edit","Risks",new {id=item.IdTool},Context.Request.Scheme)','Modificar Informacion General Del Riesgo')" class="fa fa-pencil p-2">
+                                                </i>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.IdTool"><i class="fa fa-trash"></i></a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/js/modales/modales.js"></script> }

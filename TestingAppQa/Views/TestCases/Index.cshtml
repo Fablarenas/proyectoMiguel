@@ -1,0 +1,64 @@
+﻿
+@model IEnumerable<TestingAppQa.Models.TestCase>
+
+<div class="content">
+    <div class="d-flex justify-content-between">
+        <!-- Animated -->
+        <h3 class="text-secondary">Casos de Prueba</h3>
+
+        <a onclick="showInPopup('@Url.Action("Create", "TestCases", null,Context.Request.Scheme)', 'Caso de prueba Nuevo')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nuevo caso de prueba</a>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body ">
+
+
+                    <div class="table-stats order-table ov-h">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="serial">Tipo de Prueba</th>
+                                    <th class="avatar">Variable</th>
+                                    <th>Paso A Paso</th>
+                                    <th>Analista Encargado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+
+                                    <td class="serial">@Html.DisplayFor(modelItem => item.TestType)</td>
+                                    <td class="serial">@Html.DisplayFor(modelItem => item.Var)</td>
+                                    <td class="serial">@Html.DisplayFor(modelItem => item.StepStep)</td>
+                                    <td class="serial">@Html.DisplayFor(modelItem => item.Analyst)</td>
+                                    <td class="serial">
+                                        <a>
+                                            <i class="fa fa-pencil" onclick="showInPopup('@Url.Action("Edit","TestCases",new {id=item.IdTestCase},Context.Request.Scheme)','Modificar Informacion General Del Caso de Prueba')" class="fa fa-pencil p-2">
+                                            </i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.IdTestCase"><i class="fa fa-trash"></i></a>
+
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- /# column -->
+
+
+    </div>
+    <!-- .animated -->
+</div>
+@section scripts{
+    <script src="~/js/modales/modales.js"></script> }

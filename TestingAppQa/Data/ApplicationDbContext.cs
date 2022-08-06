@@ -24,5 +24,13 @@ namespace TestingAppQa.Data
             public DbSet<User> user { get; set; }
 
         public DbSet<ProjectUser> ProjectUser { get; set; }
+
+        public DbSet<TestingAppQa.Models.Tools> Tools { get; set; }
+
+        public DbSet<TestingAppQa.Models.Risk> Risk { get; set; }
+        public DbSet<TestingAppQa.Models.Scope> Scope { get; set; }
+        public DbSet<TestingAppQa.Models.UserHistory> UserHistory { get; set; }
+        public DbSet<TestingAppQa.Models.TestCase> TestCase { get; set; }
+        public DbSet<TestingAppQa.Models.TimeOut> TimeOut { get; set; }
     }
 }

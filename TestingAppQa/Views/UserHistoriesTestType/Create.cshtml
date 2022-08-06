@@ -1,0 +1,56 @@
+﻿@model TestingAppQa.Models.UserHistory
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>UserHistory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IWant" class="control-label"></label>
+                <input asp-for="IWant" class="form-control" />
+                <span asp-validation-for="IWant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Where" class="control-label"></label>
+                <input asp-for="Where" class="form-control" />
+                <span asp-validation-for="Where" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Then" class="control-label"></label>
+                <input asp-for="Then" class="form-control" />
+                <span asp-validation-for="Then" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TestType" class="control-label"></label>
+                <input asp-for="TestType" class="form-control" />
+                <span asp-validation-for="TestType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescriptionTestType" class="control-label"></label>
+                <input asp-for="DescriptionTestType" class="form-control" />
+                <span asp-validation-for="DescriptionTestType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,112 @@
+﻿@*@model IEnumerable<TestingAppQa.Models.Tools>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Version)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Specification)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Version)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Specification)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdTool">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdTool">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdTool">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@
+
+
+
+@model IEnumerable<TestingAppQa.Models.Tools>
+
+        <div class="content">
+            <div class="d-flex justify-content-between">
+            <!-- Animated -->
+            <h3 class="text-secondary">Seleccion de herramientas</h3> 
+
+              <a onclick="showInPopup('@Url.Action("Create", "Tools", null,Context.Request.Scheme)', 'Herramienta Nueva')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nueva Herramienta</a>  
+               
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            
+                           
+                             <div class="table-stats order-table ov-h">
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th class="serial">Nombre de la Herramienta</th>
+                                            <th class="avatar">Version</th>
+                                            <th>Especificacion de uso</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+
+                                                @foreach (var item in Model)
+    {
+                                        <tr>
+
+                                            <td class="serial">@Html.DisplayFor(modelItem => item.Name)</td>
+                                            <td class="serial">@Html.DisplayFor(modelItem => item.Version)</td>
+                                            <td class="serial">@Html.DisplayFor(modelItem => item.Specification)</td>
+                                            <td class="serial">
+                                                <a>  
+                                                <i class="fa fa-pencil"  onclick="showInPopup('@Url.Action("Edit","Tools",new {id=item.IdTool},Context.Request.Scheme)','Modificar Informacion General De la herramienta')" class="fa fa-pencil p-2">
+                                                </i></a>
+                                            <a asp-action="Delete" asp-route-id="@item.IdTool"><i class="fa fa-trash"></i></a> 
+                                                
+                                            </td>
+                                        </tr>
+    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- /# column -->
+                
+
+            </div>
+            <!-- .animated -->
+        </div>
+@section scripts{
+    <script src="~/js/modales/modales.js"></script> }

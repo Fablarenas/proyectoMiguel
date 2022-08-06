@@ -1,0 +1,40 @@
+﻿
+
+@model TestingAppQa.Models.ProjectUser
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Invite">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="modal-body">
+                <label asp-for="User.Email" class="control-label">Nombre</label>
+                <input asp-for="User.Email" class="form-control" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+                <span>Asignar</span>Rol
+                <select asp-for="Rols.Id" class="form-select" aria-label="Default select example">
+                    <option value="1">Analista</option>
+                    <option value="2">Desarrollador</option>
+                    <option value="3">Product Owner</option>
+                    <option value="4">Lider De Proyecto</option>
+                </select>
+            </div>
+            <div class=" d-flex justify-content-between p-2 form-group">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Confirmar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

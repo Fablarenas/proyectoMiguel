@@ -27,7 +27,7 @@ using TestingAppQa.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c800e6ff78df50a57580ed12c47d404c7df28964", @"/Views/Projects/Details.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"5439faa0bb0be046417d68fc14cddc50a9df2a3a", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"aa45cb5f86709dc92e5e3357b0a74ffbe3860d20", @"/Views/_ViewImports.cshtml")]
     public class Views_Projects_Details : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<TestingAppQa.Models.Project>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Edit", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);

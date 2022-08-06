@@ -15,12 +15,13 @@ namespace TestingAppQa.Areas.Identity.Pages.Account
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<LogoutModel> _logger;
-
-        public LogoutModel(SignInManager<User> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<User> signInManager, ILogger<LogoutModel> logger , UserManager<User> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         public void OnGet()
@@ -29,6 +30,11 @@ namespace TestingAppQa.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            var user = await _userManager.GetUserAsync(User);
+
+            user.IdProjectActive = 0;
+            //_context.user.Update(user);
+            await _userManager.UpdateAsync(user);
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)

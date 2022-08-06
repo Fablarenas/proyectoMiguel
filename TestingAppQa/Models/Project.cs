@@ -20,5 +20,11 @@ namespace TestingAppQa.Models
         public List<Sprint> Sprints { get; set; }
 
         public List<ProjectUser> ProjectUsers { get; set; }
+
+        public  List<Tools> Tools{ get; set; }
+        public  List<Risk> Risks{ get; set; }
+        public  List<Scope> Scopes{ get; set; }
+
+
     }
 }

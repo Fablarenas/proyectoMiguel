@@ -1,0 +1,42 @@
+﻿@model TestingAppQa.Models.TestCase
+
+@{
+    ViewData["Title"] = "Editar";
+    Layout = null;
+}
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="modal-body">
+                <input type="hidden" asp-for="IdTestCase" />
+                <label asp-for="TestType" class="control-label">Tipo de prueba</label>
+                <input asp-for="TestType" class="form-control" />
+                <span asp-validation-for="TestType" class="text-danger"></span>
+
+                <label asp-for="Var" class="control-label">Variable</label>
+                <input asp-for="Var" class="form-control" />
+                <span asp-validation-for="Var" class="text-danger"></span>
+
+                <label asp-for="StepStep" class="control-label">Paso a Paso</label>
+                <input asp-for="StepStep" class="form-control" />
+                <span asp-validation-for="StepStep" class="text-danger"></span>
+
+                <label asp-for="Analyst" class="control-label">Analista</label>
+                <input asp-for="Analyst" class="form-control" />
+                <span asp-validation-for="Analyst" class="text-danger"></span>
+
+            </div>
+            <div class=" d-flex justify-content-between p-2 form-group">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Confirmar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
