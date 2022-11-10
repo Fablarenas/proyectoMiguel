@@ -1,0 +1,40 @@
+﻿
+
+@model TestingAppQa.Models.EmailVm
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="SendEmail">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Asunto :@Model.Hu</span>
+                </div>
+                <input asp-for="Asunto" placeholder="Asunto" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+
+            <input style="display : none" asp-for="Email" value="@Model.Email" class="control-label" />
+
+            <input style="display: none" asp-for="Hu" value="@Model.Hu" class="control-label" />
+
+            <input placeholder="Redacta Mensaje" width="100px" asp-for="Cuerpo" class="form-control" />
+            <div class=" d-flex justify-content-between p-2 form-group">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

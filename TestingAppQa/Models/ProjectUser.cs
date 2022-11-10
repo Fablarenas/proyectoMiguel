@@ -14,6 +14,6 @@ namespace TestingAppQa.Models
         public int IdRolUser { get; set; }
         public User User { get; set; }
         public Project Project { get; set; }
-        public Rols Rols { get; set; }
+        public string IdRol { get; set; }
     }
 }

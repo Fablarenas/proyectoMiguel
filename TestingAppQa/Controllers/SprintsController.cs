@@ -171,29 +171,6 @@ namespace TestingAppQa.Controllers
             return _context.sprint.Any(e => e.IdSprint == id);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Invite([Bind("User,Rols")] ProjectUser projectUser)
-        {
-            var user = await _userManager.GetUserAsync(User); 
-            var usuarioAdd = await _context.user.FirstOrDefaultAsync(x => x.Email == projectUser.User.Email);
-
-            var projectAdd = await _context.Project.FirstOrDefaultAsync(x => x.IdProject == user.IdProjectActive);
-            projectAdd.ProjectUsers = new List<ProjectUser>();
-            var projectUsernew = new ProjectUser { Project = projectAdd, User = usuarioAdd };
-                _context.Add(projectUsernew);
-                await _context.SaveChangesAsync();
-            //var proyecto = _context.Project.Find(user.IdProjectActive);
-            //projectUser.Project = proyecto;
-            //projectUser.User = user;
-            //if (ModelState.IsValid)
-            //{
-            //    _context.ProjectUser.Add(projectUser);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            return View();
-        }
 
         [HttpPost]
         public async Task<ActionResult> SelectSprint(int idsprint)

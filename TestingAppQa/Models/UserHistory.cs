@@ -29,5 +29,7 @@ namespace TestingAppQa.Models
 
         public List<TestCase> TestCases { get; set; }
         public List<TimeOut> TimeOuts { get; set; }
+        public List<TaskReview> ReviewTask { get; set; }
+        public List<ConsolidationReport> Report { get; set; }
     }
 }

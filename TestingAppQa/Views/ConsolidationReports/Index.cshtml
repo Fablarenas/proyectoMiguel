@@ -1,0 +1,77 @@
+﻿@model IEnumerable<TestingAppQa.Models.ConsolidationReportVm>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="animated fadeIn">
+
+    <div class="orders">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="box-title">Reporte de hallazgos </h4>
+                    </div>
+                    <div class="card-body--">
+                        <div class="table-stats order-table ov-h">
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th class="serial">ANALISTA</th>
+                                        <th class="avatar">HU</th>
+                                        <th>DESCRIPCIÓN</th>
+                                        <th>FECHA DE REPORTE</th>
+                                        <th>FECHA DE SOLUCIÓN</th>
+                                        <th>DESARROLLADOR</th>
+                                        <th>ESTADO DE TAREA</th>
+                                        <th>ESTADO DE REPORTE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    { 
+                                        <tr>
+                                            <td class="serial">@Html.DisplayFor(modelItem => item.Analista.Name)<i onclick="showInPopup('@Url.Action("Email","ConsolidationReports",new {email=item.Analista.Email,hu = item.HU.Title},Context.Request.Scheme)', `Contactar A: @item.Analista.Name.`)"  class="menu-icon ti-email"></i></td>
+                                            <td class="avatar">
+                                                <p>@Html.DisplayFor(modelItem => item.HU.Title)</p>
+                                            </td>
+                                            <td>@Html.DisplayFor(modelItem => item.Descripcion) </td>
+                                            <td> <span class="name">@Html.DisplayFor(modelItem => item.FechaSolucion)</span> </td>
+                                            <td> <span class="product">@Html.DisplayFor(modelItem => item.FechaReporte)</span> </td>
+                                            <td>
+
+                                                <form asp-controller="ConsolidationReports" asp-action="AssignDeveloper">
+
+                                                    <select asp-for="@item.IdDesarrollador" asp-items="@item.Desarrolladores">
+                                                        <option value="0">Selecciona una historia de usuario</option>
+                                                    </select> <i onclick="showInPopup('@Url.Action("Email","ConsolidationReports",new {email=item.Analista.Email,hu = item.HU.Title},Context.Request.Scheme)','Modificar Informacion General Del Sprint')" class="menu-icon ti-email"></i>
+
+                                                    <input type="submit" />
+
+                                                </form>
+
+
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-complete">Exitoso</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-complete">Solucionado</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                            </table>
+                        </div> <!-- /.table-stats -->
+                    </div>
+                </div> <!-- /.card -->
+            </div> <!-- /.col-lg-8 -->
+
+
+        </div>
+    </div>
+    <!-- /.orders -->
+
+</div>

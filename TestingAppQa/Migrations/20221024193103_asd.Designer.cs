@@ -9,8 +9,8 @@ using TestingAppQa.Data;
 namespace TestingAppQa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220805215750_migracion")]
-    partial class migracion
+    [Migration("20221024193103_asd")]
+    partial class asd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -151,11 +151,72 @@ namespace TestingAppQa.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TestingAppQa.Models.ConsolidationReport", b =>
+                {
+                    b.Property<int>("IdTimeOut")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("AnalistaId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("DesarrolladorId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("EstadoReporte")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("EstadoTarea")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("FechaReporte")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("FechaSolucion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("HUIdUserHistory")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdTimeOut");
+
+                    b.HasIndex("AnalistaId");
+
+                    b.HasIndex("DesarrolladorId");
+
+                    b.HasIndex("HUIdUserHistory");
+
+                    b.ToTable("ConsolidationReport");
+                });
+
+            modelBuilder.Entity("TestingAppQa.Models.Metrics", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CantidadTareasDesarrollador")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Desarrollador")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Metrics");
+                });
+
             modelBuilder.Entity("TestingAppQa.Models.Project", b =>
                 {
                     b.Property<int>("IdProject")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
@@ -173,6 +234,9 @@ namespace TestingAppQa.Migrations
                     b.Property<int>("IdRolUser")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("IdRol")
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("ProjectIdProject")
                         .HasColumnType("int");
@@ -275,6 +339,50 @@ namespace TestingAppQa.Migrations
                     b.HasIndex("ProjectIdProject");
 
                     b.ToTable("Sprint");
+                });
+
+            modelBuilder.Entity("TestingAppQa.Models.TaskReview", b =>
+                {
+                    b.Property<int>("IdTask")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateComplete")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DeveloperId")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("HistoryIdUserHistory")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProjectIdProject")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReponsabilityUserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TaskState")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("IdTask");
+
+                    b.HasIndex("HistoryIdUserHistory");
+
+                    b.HasIndex("ProjectIdProject");
+
+                    b.HasIndex("ReponsabilityUserId");
+
+                    b.ToTable("TaskReview");
                 });
 
             modelBuilder.Entity("TestingAppQa.Models.TestCase", b =>
@@ -522,13 +630,34 @@ namespace TestingAppQa.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TestingAppQa.Models.ConsolidationReport", b =>
+                {
+                    b.HasOne("TestingAppQa.Models.User", "Analista")
+                        .WithMany()
+                        .HasForeignKey("AnalistaId");
+
+                    b.HasOne("TestingAppQa.Models.User", "Desarrollador")
+                        .WithMany()
+                        .HasForeignKey("DesarrolladorId");
+
+                    b.HasOne("TestingAppQa.Models.UserHistory", "HU")
+                        .WithMany("Report")
+                        .HasForeignKey("HUIdUserHistory");
+
+                    b.Navigation("Analista");
+
+                    b.Navigation("Desarrollador");
+
+                    b.Navigation("HU");
+                });
+
             modelBuilder.Entity("TestingAppQa.Models.ProjectUser", b =>
                 {
                     b.HasOne("TestingAppQa.Models.Project", "Project")
                         .WithMany("ProjectUsers")
                         .HasForeignKey("ProjectIdProject");
 
-                    b.HasOne("TestingAppQa.Models.Rols", "Rols")
+                    b.HasOne("TestingAppQa.Models.Rols", null)
                         .WithMany("ProjectUsers")
                         .HasForeignKey("RolsId");
 
@@ -537,8 +666,6 @@ namespace TestingAppQa.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Project");
-
-                    b.Navigation("Rols");
 
                     b.Navigation("User");
                 });
@@ -568,6 +695,27 @@ namespace TestingAppQa.Migrations
                         .HasForeignKey("ProjectIdProject");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("TestingAppQa.Models.TaskReview", b =>
+                {
+                    b.HasOne("TestingAppQa.Models.UserHistory", "History")
+                        .WithMany("ReviewTask")
+                        .HasForeignKey("HistoryIdUserHistory");
+
+                    b.HasOne("TestingAppQa.Models.Project", "Project")
+                        .WithMany("TaskReviews")
+                        .HasForeignKey("ProjectIdProject");
+
+                    b.HasOne("TestingAppQa.Models.User", "ReponsabilityUser")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ReponsabilityUserId");
+
+                    b.Navigation("History");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("ReponsabilityUser");
                 });
 
             modelBuilder.Entity("TestingAppQa.Models.TestCase", b =>
@@ -616,6 +764,8 @@ namespace TestingAppQa.Migrations
 
                     b.Navigation("Sprints");
 
+                    b.Navigation("TaskReviews");
+
                     b.Navigation("Tools");
                 });
 
@@ -632,10 +782,16 @@ namespace TestingAppQa.Migrations
             modelBuilder.Entity("TestingAppQa.Models.User", b =>
                 {
                     b.Navigation("ProjectUsers");
+
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("TestingAppQa.Models.UserHistory", b =>
                 {
+                    b.Navigation("Report");
+
+                    b.Navigation("ReviewTask");
+
                     b.Navigation("TestCases");
 
                     b.Navigation("TimeOuts");

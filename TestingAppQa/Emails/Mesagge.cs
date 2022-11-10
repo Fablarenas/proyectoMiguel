@@ -18,7 +18,7 @@ namespace TestingAppQa.Emails
         {
             To = new List<MailboxAddress>();
 
-            To.AddRange(to.Select(x => new MailboxAddress(x)));
+            To.AddRange(to.Select(x => new MailboxAddress("Fabian",x)));
             Subject = subject;
             Content = content;
         }

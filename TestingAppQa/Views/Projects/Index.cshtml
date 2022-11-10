@@ -46,7 +46,10 @@
     <div class="d-flex justify-content-between">
         <!-- Animated -->
         <h3 class="text-secondary">Proyectos</h3>
-        <a onclick="showInPopup('@Url.Action("Create", "Projects", null,Context.Request.Scheme)', 'Proyecto Nuevo')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nuevo Proyecto</a>
+        <div>
+            <a onclick="showInPopup('@Url.Action("Create", "Projects", null,Context.Request.Scheme)', 'Proyecto Nuevo')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nuevo Proyecto</a>
+            <a onclick="showInPopup('@Url.Action("Invite", "Projects", null,Context.Request.Scheme)', 'Invitar Usuario')" class="btn btn-outline-danger"><i class="fa fa-users"></i>Invitar</a>
+        </div>
     </div>
 
     <div class="row">

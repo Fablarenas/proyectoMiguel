@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-
-
+@inject ApplicationDbContext context
 <header id="header" class="header">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -14,7 +13,11 @@
             </div>
         </div>
         <div class="top-right">
+
             <div class="header-menu">
+                <h3>
+                    Proyecto Activo : @context.Project.FirstOrDefault(m => m.IdProject == @UserManager.GetUserAsync(User).Result.IdProjectActive)?.Name
+                </h3>
                 <div class="header-left">
                     <button class="search-trigger"><i class="fa fa-search"></i></button>
                     <div class="form-inline">

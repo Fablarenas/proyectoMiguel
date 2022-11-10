@@ -32,5 +32,8 @@ namespace TestingAppQa.Data
         public DbSet<TestingAppQa.Models.UserHistory> UserHistory { get; set; }
         public DbSet<TestingAppQa.Models.TestCase> TestCase { get; set; }
         public DbSet<TestingAppQa.Models.TimeOut> TimeOut { get; set; }
+        public DbSet<TestingAppQa.Models.TaskReview> TaskReview { get; set; }
+        public DbSet<TestingAppQa.Models.Metrics> Metrics { get; set; }
+        public DbSet<TestingAppQa.Models.ConsolidationReport> ConsolidationReport { get; set; }
     }
 }

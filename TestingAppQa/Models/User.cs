@@ -18,5 +18,7 @@ namespace TestingAppQa.Models
         public int IdHUActive { get; set; }
 
         public List<ProjectUser> ProjectUsers { get; set; }
+        public List<TaskReview> Tasks { get; set; }
+
     }
 }

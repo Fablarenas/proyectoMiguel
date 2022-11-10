@@ -28,9 +28,9 @@ namespace TestingAppQa.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user.IdSprintActive != 0)
             {
-                List<UserHistory> userHistories = await (from s in _context.UserHistory
-                                               where s.SprintHistoryUser.IdSprint == user.IdSprintActive
-                                                         select s).ToListAsync();
+                    List<UserHistory> userHistories = await (from s in _context.UserHistory
+                                                   where s.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                                             select s).ToListAsync();
                 return View(userHistories);
             }
             else

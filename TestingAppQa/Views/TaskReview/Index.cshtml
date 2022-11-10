@@ -1,0 +1,113 @@
+﻿@model IEnumerable<TestingAppQa.Models.TaskReview>
+<div class="content">
+    <div class="d-flex justify-content-between">
+        <!-- Animated -->
+        <h4 class="text-secondary">SEGUIMIENTO DE PRUEBAS</h4>
+        <a onclick="showInPopup('@Url.Action("Create", "TaskReview", null,Context.Request.Scheme)', 'Nueva Tarea')" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Nueva Tarea</a>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 border-end ">
+            <h4 class="text-center">PENDIENTE</h4> <br>
+
+
+            @foreach (var item in Model)
+            {
+                @if (item.TaskState == "PENDIENTE")
+                {
+                    <div class="card">
+                        <div class="card-body d-flex justify-content-around">
+                            <div>
+                                <h5>@Html.DisplayFor(modelItem => item.Title)</h5>
+                                <div>
+                                    <p class="m-0 mt-2">
+                                        @Html.DisplayFor(modelItem => item.History.Title)
+                                    </p>
+                                    <p class="m-0">
+                                        @Html.DisplayFor(modelItem => item.ReponsabilityUser.Name)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column ">
+                                <i onclick="showInPopup('@Url.Action("Edit","TaskReview",new {id=item.IdTask},Context.Request.Scheme)','Modificar Informacion General Del Sprint')" class="fa fa-pencil"></i>
+                                <a class="fa fa-play" onclick="showInPopup('@Url.Action("ActualizarEstado","TaskReview",new {id=item.IdTask},Context.Request.Scheme)','Estas seguro que deseas Avanzar esta tarea al estado EN PROCESO')"></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+
+        </div><!-- /# column -->
+        <div class="col-lg-4 border-end ">
+            <h4 class="text-center">EN PROCESO</h4> <br>
+            @foreach (var item in Model)
+            {
+                @if (item.TaskState == "PROCESO")
+                {
+                    <div class="card">
+                        <div class="card-body d-flex justify-content-around">
+                            <div>
+                                <h5>@Html.DisplayFor(modelItem => item.Title)</h5>
+                                <div>
+                                    <p class="m-0 mt-2">
+                                        @Html.DisplayFor(modelItem => item.History.Title)
+                                    </p>
+                                    <p class="m-0">
+                                        @Html.DisplayFor(modelItem => item.ReponsabilityUser.Name)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column ">
+                                <i class="fa fa-pencil" onclick="showInPopup('@Url.Action("Edit","TaskReview",new {id=item.IdTask},Context.Request.Scheme)','Modificar Informacion General De La Tarea')" class="btn btn-info text-white"></i>
+                                <a class="fa fa-play" onclick="showInPopup('@Url.Action("ActualizarEstado","TaskReview",new {id=item.IdTask},Context.Request.Scheme)','Estas seguro que deseas Avanzar esta tarea al estado EN COMPLETADO?')"></a>
+                                @*<a class="fa fa-play" onclick="avanzarEstadoTarea(@Html.DisplayFor(modelItem => item.IdTask))"></a>*@
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div><!-- /# column -->
+        <div class="col-lg-4 border-end ">
+            <h4 class="text-center">COMPLETADO</h4> <br>
+            @foreach (var item in Model)
+            {
+                @if (item.TaskState == "COMPLETADO")
+                {
+                    <div class="card">
+                        <div class="card-body d-flex justify-content-around">
+                            <div>
+                                <h5>@Html.DisplayFor(modelItem => item.Title)</h5>
+                                <div>
+                                    <p class="m-0 mt-2">
+                                        @Html.DisplayFor(modelItem => item.History.Title)
+                                    </p>
+                                    <p class="m-0">
+                                        @Html.DisplayFor(modelItem => item.ReponsabilityUser.Name)
+                                    </p>
+                                    <p class="m-0">
+                                        @Html.DisplayFor(modelItem => item.State)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column ">
+                                <i class="fa fa-pencil" onclick="showInPopup('@Url.Action("Edit","TaskReview",new {id=item.IdTask},Context.Request.Scheme)','Modificar Informacion General De La Tarea')" class="btn btn-info text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+    </div>
+</div>
+<script>
+
+    avanzarEstadoTarea = (idtask) => {
+        $.post("@Url.Action("ChangeState", "TaskReview")?id=" + idtask,function(re){
+     });
+}</script>
+@section scripts{
+    <script src="~/js/modales/modales.js"></script> }
+<!-- .animated -->

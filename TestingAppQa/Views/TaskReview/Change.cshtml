@@ -1,0 +1,30 @@
+﻿
+
+@model TestingAppQa.Models.TaskReview
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="ChangeState">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <label class="control-label">Estas Seguro que deseas cambiar de estado la tarea?</label>
+            <div class=" d-flex justify-content-between p-2 form-group">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

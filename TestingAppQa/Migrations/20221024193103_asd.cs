@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TestingAppQa.Migrations
 {
-    public partial class migracion : Migration
+    public partial class asd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,6 +75,22 @@ namespace TestingAppQa.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Metrics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Desarrollador = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CantidadTareasDesarrollador = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Metrics", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Project",
                 columns: table => new
                 {
@@ -83,7 +99,8 @@ namespace TestingAppQa.Migrations
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Deleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -342,6 +359,8 @@ namespace TestingAppQa.Migrations
                     UserId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProjectIdProject = table.Column<int>(type: "int", nullable: true),
+                    IdRol = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     RolsId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -396,6 +415,96 @@ namespace TestingAppQa.Migrations
                         column: x => x.SprintHistoryUserIdSprint,
                         principalTable: "Sprint",
                         principalColumn: "IdSprint",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ConsolidationReport",
+                columns: table => new
+                {
+                    IdTimeOut = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AnalistaId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    HUIdUserHistory = table.Column<int>(type: "int", nullable: true),
+                    Descripcion = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FechaReporte = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    FechaSolucion = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DesarrolladorId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EstadoTarea = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EstadoReporte = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConsolidationReport", x => x.IdTimeOut);
+                    table.ForeignKey(
+                        name: "FK_ConsolidationReport_AspNetUsers_AnalistaId",
+                        column: x => x.AnalistaId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ConsolidationReport_AspNetUsers_DesarrolladorId",
+                        column: x => x.DesarrolladorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ConsolidationReport_UserHistory_HUIdUserHistory",
+                        column: x => x.HUIdUserHistory,
+                        principalTable: "UserHistory",
+                        principalColumn: "IdUserHistory",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TaskReview",
+                columns: table => new
+                {
+                    IdTask = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    HistoryIdUserHistory = table.Column<int>(type: "int", nullable: true),
+                    ReponsabilityUserId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    State = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TaskState = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DateComplete = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ProjectIdProject = table.Column<int>(type: "int", nullable: true),
+                    DeveloperId = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskReview", x => x.IdTask);
+                    table.ForeignKey(
+                        name: "FK_TaskReview_AspNetUsers_ReponsabilityUserId",
+                        column: x => x.ReponsabilityUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskReview_Project_ProjectIdProject",
+                        column: x => x.ProjectIdProject,
+                        principalTable: "Project",
+                        principalColumn: "IdProject",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskReview_UserHistory_HistoryIdUserHistory",
+                        column: x => x.HistoryIdUserHistory,
+                        principalTable: "UserHistory",
+                        principalColumn: "IdUserHistory",
                         onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -490,6 +599,21 @@ namespace TestingAppQa.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConsolidationReport_AnalistaId",
+                table: "ConsolidationReport",
+                column: "AnalistaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConsolidationReport_DesarrolladorId",
+                table: "ConsolidationReport",
+                column: "DesarrolladorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConsolidationReport_HUIdUserHistory",
+                table: "ConsolidationReport",
+                column: "HUIdUserHistory");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProjectUser_ProjectIdProject",
                 table: "ProjectUser",
                 column: "ProjectIdProject");
@@ -518,6 +642,21 @@ namespace TestingAppQa.Migrations
                 name: "IX_Sprint_ProjectIdProject",
                 table: "Sprint",
                 column: "ProjectIdProject");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskReview_HistoryIdUserHistory",
+                table: "TaskReview",
+                column: "HistoryIdUserHistory");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskReview_ProjectIdProject",
+                table: "TaskReview",
+                column: "ProjectIdProject");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskReview_ReponsabilityUserId",
+                table: "TaskReview",
+                column: "ReponsabilityUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TestCase_HistoryUserIdUserHistory",
@@ -558,6 +697,12 @@ namespace TestingAppQa.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ConsolidationReport");
+
+            migrationBuilder.DropTable(
+                name: "Metrics");
+
+            migrationBuilder.DropTable(
                 name: "ProjectUser");
 
             migrationBuilder.DropTable(
@@ -565,6 +710,9 @@ namespace TestingAppQa.Migrations
 
             migrationBuilder.DropTable(
                 name: "Scope");
+
+            migrationBuilder.DropTable(
+                name: "TaskReview");
 
             migrationBuilder.DropTable(
                 name: "TestCase");
@@ -579,10 +727,10 @@ namespace TestingAppQa.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Rols");
 
             migrationBuilder.DropTable(
-                name: "Rols");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "UserHistory");

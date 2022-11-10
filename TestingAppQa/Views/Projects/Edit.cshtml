@@ -28,14 +28,14 @@
                 </div>
             </div>
         </form>
-        <form asp-action="DeleteConfirmed" asp-route-id="@Model.IdProject">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class=" d-flex justify-content-between p-2 form-group">
                 <div>
-                    <button type="submit" class="btn btn-success">Borrar Proyecto</button>
+                    <button type="submit" onclick="showInPopup('@Url.Action("Delete","Projects",new {id=Model.IdProject},Context.Request.Scheme)','¿Esta Seguro que desea eliminar este proyecto?')" class="btn btn-danger">Borrar Proyecto</button>
                 </div>
             </div>
-        </form>
+
 
     </div>
 </div>
