@@ -6,7 +6,6 @@ C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\Te
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\TestingAppQa.runtimeconfig.json
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\TestingAppQa.runtimeconfig.dev.json
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\TestingAppQa.dll
-C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\ref\TestingAppQa.dll
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\TestingAppQa.pdb
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\TestingAppQa.Views.dll
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\TestingAppQa.Views.pdb
@@ -249,4 +248,9 @@ C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\obj\Debug\net5.0\re
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\obj\Debug\net5.0\TestingAppQa.pdb
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\obj\Debug\net5.0\TestingAppQa.genruntimeconfig.cache
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\obj\Debug\net5.0\Razor\Views\ConsolidationReports\Email.cshtml.g.cs
+C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\obj\Debug\net5.0\Razor\Views\ConsolidationReports\AssignDeveloperConfirm.cshtml.g.cs
+C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\obj\Debug\net5.0\Razor\Views\ConsolidationReports\ActualizarEstadoExistoso.cshtml.g.cs
 C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\obj\Debug\net5.0\TestingAppQa.csproj.AssemblyReference.cache
+C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\itextsharp.dll
+C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\itextsharp.xmlworker.dll
+C:\Users\FabianArenas\source\repos\TestingAppQa\TestingAppQa\bin\Debug\net5.0\ref\TestingAppQa.dll

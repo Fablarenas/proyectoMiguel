@@ -113,6 +113,11 @@ namespace TestingAppQa.Areas.Identity.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
+                    if (error.Code == "DuplicateUserName")
+                    {
+                        error.Description = "El usuario ya tiene una cuenta creada en el sistema.";
+                    }
+                    
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }

@@ -11,21 +11,36 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="mb-3">Bar chart </h4>
-                    <canvas id="barChart"></canvas>
+                    <h4 class="mb-3">Desarrollador Cantidad Solucionado </h4>
+                    <canvas id="singelBarChart"></canvas>
                 </div>
             </div>
-        </div>
+        </div><!-- /# column -->
+
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="mb-3">Single Bar Chart </h4>
-                    <canvas id="singelBarChart"></canvas>
+                    <h4 class="mb-3">Analista Cantidad Bugs Reportados </h4>
+                    <canvas id="singelBarChartanalistas"></canvas>
                 </div>
             </div>
         </div><!-- /# column -->
     </div>
 
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="mb-3">Bar chart </h4>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <a onclick="cambiarProyecto(1)" class="btn btn-danger text-white"><i class="fa fa-plus"></i>Descargar Reportes PDF</a>
+        <a href="/Metrics/DescargarPDF/">Download</a>
+    </div>
 </div><!-- .animated -->
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
@@ -35,7 +50,109 @@
 <script src="~/js/main.js"></script>
 <!--  Chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+<script>
+    $(window).ready(function () {
+         $.get("@Url.Action("GetData", "Metrics")",function(re){
+             var ctx = document.getElementById("singelBarChart");
+             ctx.height = 150;
+             var myChart = new Chart(ctx, {
+                 type: 'bar',
+                 data: {
+                     labels: re.labels,
+                     datasets: [
+                         {
+                             label: "Cantidad Tareas Solucionado",
+                             data: re.coun,
+                             borderColor: "rgba(0, 194, 146, 0.9)",
+                             borderWidth: "0",
+                             backgroundColor: "rgba(0, 194, 146, 0.5)"
+                         }
+                     ]
+                 },
+                 options: {
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                 beginAtZero: true,
+                                 precision: 0
+                             }
+                         }]
+                     }
+                 }
+             });
+
+
+             var ctxx = document.getElementById("singelBarChartanalistas");
+             ctxx.height = 150;
+             var myChart = new Chart(ctxx, {
+                 type: 'bar',
+                 data: {
+                     labels: re.labelsanalista,
+                     datasets: [
+                         {
+                             label: "Cantidad Reportados",
+                             data: re.counreport,
+                             borderColor: "rgba(0, 194, 146, 0.9)",
+                             borderWidth: "0",
+                             backgroundColor: "rgba(0, 194, 146, 0.5)"
+                         }
+                     ]
+                 },
+                 options: {
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                 beginAtZero: true,
+                                 precision : 0
+                             }
+                         }]
+                     }
+                 }
+             });
+             console.log(re.exitosos)
+             var ctxxx = document.getElementById("pieChart");
+             ctxxx.height = 300;
+             var myChart = new Chart(ctxxx, {
+                 type: 'pie',
+                 data: {
+                     datasets: [{
+                         data: [re.exitosos,re.noexitosos],
+                         backgroundColor: [
+                             "rgba(0, 194, 146,0.9)",
+                             "rgba(0, 194, 146,0.7)",
+                             "rgba(0, 194, 146,0.5)",
+                             "rgba(0,0,0,0.07)"
+                         ],
+                         hoverBackgroundColor: [
+                             "rgba(0, 194, 146,0.9)",
+                             "rgba(0, 194, 146,0.7)",
+                             "rgba(0, 194, 146,0.5)",
+                             "rgba(0,0,0,0.07)"
+                         ]
+
+                     }],
+                     labels: [
+                         "Tareas Exitosas",
+                         "Tareas No Exitosas"
+                     ]
+                 },
+                 options: {
+                     responsive: true
+                 }
+             });
+     });
+    });</script>
+<script>
+
+    cambiarProyecto = (idProject) => {
+
+console.log('hola')
+        $.get("@Url.Action("GenerarPDF", "Metrics")?idproyecto=" + idProject, function (re) {
+                      window.location.href="@Url.Action("DescargarPDF", "Metrics")";
+     });
+}</script>
 <script src="~/js/chartjs-init.js"></script>
+
 <!--Flot Chart-->
 <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>

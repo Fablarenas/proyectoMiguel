@@ -100,8 +100,53 @@ $(function () {
     });
 });
 
-showInPopup = (url, title) => {
+
+showInPopupdesarrolladores = (url, title, id) => {
+    let iddos = 'desarrolador' + id;
+    let sel = document.getElementById(iddos);
+    choi = sel.options[sel.selectedIndex].value;
+    url = url + "&iddeveloper=" + choi
+    console.log(choi)
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (res) {
+            console.log("Entro")
+        }
+    })
+}
+
+showInPopupdos = (url, title, id) => {
+    let sel = document.getElementById(id);
+    console.log(id);
+    choi = sel.options[sel.selectedIndex].value;
+    url = url + "&iddeveloper=" + choi
+    console.log(choi)
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (res) {
+        console.log("Entro")
+        }
+    })
+}
+
+showInPopuptres = (url, title,id) => {
     console.log(url)
+    let sel = document.getElementById(id);
+    choi = sel.options[sel.selectedIndex].value;
+    url = url + "&estado=" + choi
+    console.log(choi)
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (res) {
+            console.log("Entro")
+        }
+    })
+}
+
+showInPopup = (url, title) => {
     $.ajax({
         type: 'GET',
         url: url,
@@ -116,6 +161,8 @@ showInPopup = (url, title) => {
         }
     })
 }
+
+
 
 jQueryAjaxPost = form => {
     try {

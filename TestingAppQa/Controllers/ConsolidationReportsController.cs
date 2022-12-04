@@ -64,6 +64,11 @@ namespace TestingAppQa.Controllers
                 report.Descripcion = item.Description;
                 report.FechaReporte = item.DateComplete;
                 report.Desarrolladores = listDeveloperts;
+                report.IdDesarrollador = item.DeveloperId;
+                report.Id = item.IdTask;
+                report.EstadoTarea = item.State;
+                report.EstadoReporte = item.ReportState;
+                report.selectedId = "desarrolador"+item.IdTask;
                 datos.Add(report);
             }
             return View(datos);
@@ -193,21 +198,60 @@ namespace TestingAppQa.Controllers
         {
             return _context.ConsolidationReport.Any(e => e.IdTimeOut == id);
         }
+        [HttpGet]
+        public async Task<IActionResult> ActualizarEstadoExistoso(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var taskReview = await _context.TaskReview
+                .FirstOrDefaultAsync(m => m.IdTask == id);
+            if (taskReview == null)
+            {
+                return NotFound();
+            }
+
+            return View(taskReview);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ActualizarEstadoExistosoConfirm(int? id)
+        {
+            var taskReview = await _context.TaskReview.FindAsync(id);
+            if (taskReview.State == "NOEXITOSO")
+            {
+                taskReview.State = "EXITOSO";
+                _context.Update(taskReview);
+                await _context.SaveChangesAsync();
+            }
+
+
+            return RedirectToAction(nameof(Index));
+        }
 
         [HttpGet]
-        public async Task<IActionResult> Email(string email,string hu)
+        public async Task<IActionResult> Email(string email,string hu,int idtask)
         {
             if (hu == null)
             {
                 return NotFound();
             }
+            string iduser = "";
+            if (email == null)
+            {
+                var task = await _context.TaskReview.FirstOrDefaultAsync(m => m.IdTask == idtask);
+                iduser = task.DeveloperId;
 
-            var user = await _context.user
-                .FirstOrDefaultAsync(m => m.Email == email);
+            }
+            var user = email != null ? await _context.user
+                .FirstOrDefaultAsync(m => m.Email == email) : await _context.user
+                .FirstOrDefaultAsync(m => m.Id == iduser);
             EmailVm emailobj = new EmailVm();
             emailobj.Name = user.Name;
             emailobj.Hu = hu;
-            emailobj.Email = email;
+            emailobj.Email = user.Email;
             if (user == null)
             {
                 return NotFound();
@@ -224,11 +268,31 @@ namespace TestingAppQa.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
-        public async Task<IActionResult> AssignDeveloper([Bind("Asunto,Cuerpo,Email,Hu,Name")] EmailVm? data)
+        public async Task<IActionResult> AssignDeveloper([Bind("Id,Title, idhu, ReponsabilityUser, Description")] TaskReviewVm taskReview)
         {
-            var message = new Message(new string[] { data.Email }, data.Asunto,data.Cuerpo);
-            _emailSender.SendEmail(message);
             return RedirectToAction(nameof(Index));
+        }        
+        [HttpGet]
+        public async Task<IActionResult> AssignDeveloperConfirm(string iddeveloper, int idtask)
+        {
+
+            var user = await _context.TaskReview
+                .FirstOrDefaultAsync(m => m.IdTask == idtask);
+            user.DeveloperId = iddeveloper;
+             _context.TaskReview
+            .Update(user);
+            await _context.SaveChangesAsync();
+            return Redirect(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EstadoReporte(string estado, int idtask)
+        {
+            var task = await _context.TaskReview.FirstOrDefaultAsync(m => m.IdTask == idtask);
+            task.ReportState = estado;
+            _context.TaskReview.Update(task);
+            await _context.SaveChangesAsync();
+            return Redirect(nameof(Index));
         }
     }
 }

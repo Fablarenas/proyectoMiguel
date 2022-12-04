@@ -9,7 +9,8 @@ namespace TestingAppQa.Models
 {
     public class ConsolidationReportVm
     {
-        public int IdTimeOut { get; set; }
+        public int Id { get; set; }
+        public string selectedId { get; set; }
         public User Analista { get; set; }
         public UserHistory HU { get; set; }
         public string Descripcion { get; set; }
@@ -20,7 +21,7 @@ namespace TestingAppQa.Models
         public string EstadoReporte { get; set; }
         public List<SelectListItem> Desarrolladores { get; set; }
 
-        public int IdDesarrollador { get; set; }
+        public string IdDesarrollador { get; set; }
 
     }
 }

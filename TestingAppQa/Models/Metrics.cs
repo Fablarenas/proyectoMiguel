@@ -13,6 +13,10 @@ namespace TestingAppQa.Models
         [Key]
         public int Id { get; set; }
         public string Desarrollador { get; set; }
+        public string Analista { get; set; }
         public int CantidadTareasDesarrollador { get; set; }
+        public int CantidadReportadosAnalista { get; set; }
+        public int cantidadexitosas { get; set; }
+        public int cantidadnoexitosas { get; set; }
     }
 }

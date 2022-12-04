@@ -32,35 +32,42 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     { 
-                                        <tr>
-                                            <td class="serial">@Html.DisplayFor(modelItem => item.Analista.Name)<i onclick="showInPopup('@Url.Action("Email","ConsolidationReports",new {email=item.Analista.Email,hu = item.HU.Title},Context.Request.Scheme)', `Contactar A: @item.Analista.Name.`)"  class="menu-icon ti-email"></i></td>
-                                            <td class="avatar">
-                                                <p>@Html.DisplayFor(modelItem => item.HU.Title)</p>
-                                            </td>
-                                            <td>@Html.DisplayFor(modelItem => item.Descripcion) </td>
-                                            <td> <span class="name">@Html.DisplayFor(modelItem => item.FechaSolucion)</span> </td>
-                                            <td> <span class="product">@Html.DisplayFor(modelItem => item.FechaReporte)</span> </td>
+                                    <tr>
+                                        <td class="serial">@Html.DisplayFor(modelItem => item.Analista.Name)<i onclick="showInPopup('@Url.Action("Email","ConsolidationReports",new {email=item.Analista.Email,hu = item.HU.Title},Context.Request.Scheme)', `Contactar A: @item.Analista.Name.`)" class="menu-icon ti-email"></i></td>
+                                        <td class="avatar">
+                                            <p>@Html.DisplayFor(modelItem => item.HU.Title)</p>
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.Descripcion) </td>
+                                        <td> <span class="name">@Html.DisplayFor(modelItem => item.FechaSolucion)</span> </td>
+                                        <td> <span class="product">@Html.DisplayFor(modelItem => item.FechaReporte)</span> </td>
+                                        <td>
+                                            @*comboboxDesarrolladores*@
+                                            <select id="@item.selectedId" onchange="showInPopupdesarrolladores('@Url.Action("AssignDeveloperConfirm","ConsolidationReports",new {idtask = item.Id},Context.Request.Scheme)', '',@item.Id.ToString())" asp-for="@item.IdDesarrollador" asp-items="@item.Desarrolladores">
+                                                <option value="0">Selecciona un desarrollador</option>
+                                            </select> <i onclick="showInPopup('@Url.Action("Email","ConsolidationReports",new {idtask=item.Id,hu = item.HU.Title},Context.Request.Scheme)', `Contactar A: desarrollador`)" class="menu-icon ti-email"></i>
+                                            @*comboboxDesarrolladores*@
+                                        </td>
+                                        @if (item.EstadoTarea == "NOEXITOSO")
+                                        {
                                             <td>
-
-                                                <form asp-controller="ConsolidationReports" asp-action="AssignDeveloper">
-
-                                                    <select asp-for="@item.IdDesarrollador" asp-items="@item.Desarrolladores">
-                                                        <option value="0">Selecciona una historia de usuario</option>
-                                                    </select> <i onclick="showInPopup('@Url.Action("Email","ConsolidationReports",new {email=item.Analista.Email,hu = item.HU.Title},Context.Request.Scheme)','Modificar Informacion General Del Sprint')" class="menu-icon ti-email"></i>
-
-                                                    <input type="submit" />
-
-                                                </form>
-
-
+                                                <span class="badge badge-info" onclick="showInPopup('@Url.Action("ActualizarEstadoExistoso", "ConsolidationReports", new { id = item.Id }, Context.Request.Scheme)','Pasar la tarea a estado exitoso')">@item.EstadoTarea  </span>
                                             </td>
+                                        }
+                                        else
+                                        {
                                             <td>
-                                                <span class="badge badge-complete">Exitoso</span>
+                                                <span class="badge badge-complete">@item.EstadoTarea</span>
                                             </td>
-                                            <td>
-                                                <span class="badge badge-complete">Solucionado</span>
-                                            </td>
-                                        </tr>
+                                        }
+                                    <td>
+                                        <select id="@item.Id" onchange="showInPopuptres('@Url.Action("EstadoReporte","ConsolidationReports",new {idtask = item.Id},Context.Request.Scheme)', '',@item.Id.ToString())" asp-for="@item.EstadoReporte">
+                                            <option value="0">estado</option>
+                                            <option value="SOLUCIONADO" >Solucionado</option>
+                                            <option value="PENDIENTE" >Pendiente</option>
+                                            <option value="ANULADO" >Anulado</option>
+                                        </select>
+                                    </td>
+                                    </tr>
                                     }
                                     </tbody>
                             </table>
@@ -75,3 +82,25 @@
     <!-- /.orders -->
 
 </div>
+<script>
+
+    getValue = (url, title) => {
+        let sel = document.getElementById('ddlViewBy');
+        choi = sel.options[sel.selectedIndex].value;
+        console.log(choi)
+        let data = { iddeveloper= choi, idtask = parameter1 }
+        $.ajax({
+            type: 'GET',
+            url: @Url.Action("AssignDeveloperConfirm","ConsolidationReports") + data;
+            success: function (res) {
+                $('#form-modal .modal-body').html(res);
+                $('#form-modal .modal-title').html(title);
+                $('#form-modal').modal('show');
+                // to make popup draggable
+                $('.modal-dialog').draggable({
+                    handle: ".modal-header"
+                });
+            }
+        })
+    }
+</script>
