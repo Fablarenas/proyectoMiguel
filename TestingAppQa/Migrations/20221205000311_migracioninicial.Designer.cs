@@ -9,8 +9,8 @@ using TestingAppQa.Data;
 namespace TestingAppQa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221110200030_asdad")]
-    partial class asdad
+    [Migration("20221205000311_migracioninicial")]
+    partial class migracioninicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -198,11 +198,23 @@ namespace TestingAppQa.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Analista")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("CantidadReportadosAnalista")
+                        .HasColumnType("int");
+
                     b.Property<int>("CantidadTareasDesarrollador")
                         .HasColumnType("int");
 
                     b.Property<string>("Desarrollador")
                         .HasColumnType("longtext");
+
+                    b.Property<int>("cantidadexitosas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cantidadnoexitosas")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -299,23 +311,23 @@ namespace TestingAppQa.Migrations
 
             modelBuilder.Entity("TestingAppQa.Models.Scope", b =>
                 {
-                    b.Property<int>("IdTool")
+                    b.Property<int>("IdScope")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Considerations")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NameModule")
                         .HasColumnType("longtext");
 
                     b.Property<int?>("ProjectIdProject")
                         .HasColumnType("int");
 
-                    b.Property<string>("Specification")
+                    b.Property<string>("TestGoal")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Version")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("IdTool");
+                    b.HasKey("IdScope");
 
                     b.HasIndex("ProjectIdProject");
 
@@ -364,6 +376,9 @@ namespace TestingAppQa.Migrations
 
                     b.Property<string>("ReponsabilityUserId")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ReportState")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("State")
                         .HasColumnType("longtext");

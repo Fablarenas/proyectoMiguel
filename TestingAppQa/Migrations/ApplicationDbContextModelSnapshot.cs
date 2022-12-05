@@ -196,11 +196,23 @@ namespace TestingAppQa.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Analista")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("CantidadReportadosAnalista")
+                        .HasColumnType("int");
+
                     b.Property<int>("CantidadTareasDesarrollador")
                         .HasColumnType("int");
 
                     b.Property<string>("Desarrollador")
                         .HasColumnType("longtext");
+
+                    b.Property<int>("cantidadexitosas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cantidadnoexitosas")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -297,23 +309,23 @@ namespace TestingAppQa.Migrations
 
             modelBuilder.Entity("TestingAppQa.Models.Scope", b =>
                 {
-                    b.Property<int>("IdTool")
+                    b.Property<int>("IdScope")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Considerations")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NameModule")
                         .HasColumnType("longtext");
 
                     b.Property<int?>("ProjectIdProject")
                         .HasColumnType("int");
 
-                    b.Property<string>("Specification")
+                    b.Property<string>("TestGoal")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Version")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("IdTool");
+                    b.HasKey("IdScope");
 
                     b.HasIndex("ProjectIdProject");
 

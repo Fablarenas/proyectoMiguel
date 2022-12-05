@@ -271,6 +271,10 @@ namespace TestingAppQa.Controllers
 
             var user = await _userManager.GetUserAsync(User);
 
+            UserHistory userHistory = await (from s in _context.UserHistory
+                                                     where s.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                                     select s).SingleAsync();
+
             List<UserHistory> userHistories = await (from s in _context.UserHistory
                                                      where s.SprintHistoryUser.IdSprint == user.IdSprintActive
                                                      select s).ToListAsync();
@@ -405,10 +409,10 @@ namespace TestingAppQa.Controllers
             tableScope.AddCell("Consideraciones");
             foreach (var item in scopes)
             {
-                tableScope.AddCell(item.Name);
-                tableScope.AddCell(item.Name);
-                tableScope.AddCell(item.Name);
-                tableScope.AddCell(item.Name);
+                tableScope.AddCell(item.NameModule);
+                tableScope.AddCell(userHistory.Title);
+                tableScope.AddCell(item.TestGoal);
+                tableScope.AddCell(item.Considerations);
             }
             tableScope.SpacingBefore = 20;
             tableScope.SpacingAfter = 20;

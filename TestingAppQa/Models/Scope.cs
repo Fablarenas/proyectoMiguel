@@ -5,12 +5,12 @@ namespace TestingAppQa.Models
     public class Scope
     {
         [Key]
-        public int IdTool { get; set; }
+        public int IdScope { get; set; }
 
-        public string Name { get; set; }
+        public string NameModule { get; set; }
 
-        public string Version { get; set; }
-        public string Specification { get; set; }
+        public string TestGoal { get; set; }
+        public string Considerations { get; set; }
 
         public Project Project { get; set; }
     }

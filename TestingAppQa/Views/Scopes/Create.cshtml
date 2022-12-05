@@ -2,40 +2,33 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
-
-<h1>Create</h1>
-
-<h4>Scope</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+            <div class="modal-body">
+                <label asp-for="NameModule" class="control-label">Nombre del modulo</label>
+                <input asp-for="NameModule" class="form-control" />
+                <span asp-validation-for="NameModule" class="text-danger"></span>
+                <label asp-for="TestGoal" class="control-label">Objetivo de la prueba</label>
+                <input asp-for="TestGoal" class="form-control" />
+                <span asp-validation-for="TestGoal" class="text-danger"></span>
+                <label asp-for="Considerations" class="control-label">Consideraciones</label>
+                <input asp-for="Considerations" class="form-control" />
+                <span asp-validation-for="Considerations" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Version" class="control-label"></label>
-                <input asp-for="Version" class="form-control" />
-                <span asp-validation-for="Version" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Specification" class="control-label"></label>
-                <input asp-for="Specification" class="form-control" />
-                <span asp-validation-for="Specification" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class=" d-flex justify-content-between p-2 form-group">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Confirmar</button>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

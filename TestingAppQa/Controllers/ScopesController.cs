@@ -34,7 +34,7 @@ namespace TestingAppQa.Controllers
             }
 
             var scope = await _context.Scope
-                .FirstOrDefaultAsync(m => m.IdTool == id);
+                .FirstOrDefaultAsync(m => m.IdScope == id);
             if (scope == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace TestingAppQa.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTool,Name,Version,Specification")] Scope scope)
+        public async Task<IActionResult> Create([Bind("IdTool,NameModule,TestGoal,Considerations")] Scope scope)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace TestingAppQa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdTool,Name,Version,Specification")] Scope scope)
         {
-            if (id != scope.IdTool)
+            if (id != scope.IdScope)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace TestingAppQa.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ScopeExists(scope.IdTool))
+                    if (!ScopeExists(scope.IdScope))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace TestingAppQa.Controllers
             }
 
             var scope = await _context.Scope
-                .FirstOrDefaultAsync(m => m.IdTool == id);
+                .FirstOrDefaultAsync(m => m.IdScope == id);
             if (scope == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace TestingAppQa.Controllers
 
         private bool ScopeExists(int id)
         {
-            return _context.Scope.Any(e => e.IdTool == id);
+            return _context.Scope.Any(e => e.IdScope == id);
         }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TestingAppQa.Migrations
 {
-    public partial class asdad : Migration
+    public partial class migracioninicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,7 +82,12 @@ namespace TestingAppQa.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Desarrollador = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CantidadTareasDesarrollador = table.Column<int>(type: "int", nullable: false)
+                    Analista = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CantidadTareasDesarrollador = table.Column<int>(type: "int", nullable: false),
+                    CantidadReportadosAnalista = table.Column<int>(type: "int", nullable: false),
+                    cantidadexitosas = table.Column<int>(type: "int", nullable: false),
+                    cantidadnoexitosas = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -280,19 +285,19 @@ namespace TestingAppQa.Migrations
                 name: "Scope",
                 columns: table => new
                 {
-                    IdTool = table.Column<int>(type: "int", nullable: false)
+                    IdScope = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
+                    NameModule = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Version = table.Column<string>(type: "longtext", nullable: true)
+                    TestGoal = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Specification = table.Column<string>(type: "longtext", nullable: true)
+                    Considerations = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProjectIdProject = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Scope", x => x.IdTool);
+                    table.PrimaryKey("PK_Scope", x => x.IdScope);
                     table.ForeignKey(
                         name: "FK_Scope_Project_ProjectIdProject",
                         column: x => x.ProjectIdProject,
@@ -483,6 +488,8 @@ namespace TestingAppQa.Migrations
                     DateComplete = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ProjectIdProject = table.Column<int>(type: "int", nullable: true),
                     DeveloperId = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ReportState = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
