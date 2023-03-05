@@ -1,0 +1,57 @@
+﻿@model TestingAppQa.Models.User
+<div class="content">
+    <!-- Animated -->
+    <h3 class="text-secondary">Profile</h3> <br>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="https://cdn.icon-icons.com/icons2/582/PNG/512/man_icon-icons.com_55040.png" alt=""
+                         srcset="" width="40%">
+                    <div>
+                        <h4>@Model.Name</h4>
+                    </div>
+                    <div class="clearfix border"></div>
+
+                    <div class="text-start mt-3">
+                        <p class="p-0 m-0">Emial Address</p>
+                        <span class="p-0 m-0">@Model.Email</span>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- /# column -->
+
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="box-title">Settings </h4>
+                    <form asp-controller="User" asp-action="ChangePassword" method="post" >
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control is-valid border" style="border:0px" disabled="disabled" id="floatingInputInvalid" placeholder="name@example.com" value="@Model.Name">
+                            <label for="floatingInputInvalid">Nombre</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" asp-for ="Email" class="form-control is-valid border" id="floatingInputInvalid" disabled="disabled" placeholder="name@example.com" value="@Model.Email">
+                            <label for="floatingInputInvalid">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" for="newPassword" name="newPassword" class="form-control is-valid border" id="floatingInputInvalid" placeholder="name@example.com" value="@Model.Pass">
+                            <label for="floatingInputInvalid">Password</label>
+                        </div>
+                        <button type="submit" class="btn btn-success">Success</button>
+                    </form>
+                </div>
+
+            </div>
+        </div><!-- /# column -->
+
+    </div>
+    <!-- .animated -->
+</div>
+<script>
+    function redirectToResetPasswordPage() {
+        window.location.href = "/Identity/Account/ResetPassword";
+    }
+</script>

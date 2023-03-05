@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\FabianArenas\\source\\repos\\TestingAppQa\\TestingAppQa\\TestingAppQa.csproj": {}
+    "C:\\Users\\arena\\Source\\Repos\\proyectoMiguel\\TestingAppQa\\TestingAppQa.csproj": {}
   },
   "projects": {
-    "C:\\Users\\FabianArenas\\source\\repos\\TestingAppQa\\TestingAppQa\\TestingAppQa.csproj": {
+    "C:\\Users\\arena\\Source\\Repos\\proyectoMiguel\\TestingAppQa\\TestingAppQa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\FabianArenas\\source\\repos\\TestingAppQa\\TestingAppQa\\TestingAppQa.csproj",
+        "projectUniqueName": "C:\\Users\\arena\\Source\\Repos\\proyectoMiguel\\TestingAppQa\\TestingAppQa.csproj",
         "projectName": "TestingAppQa",
-        "projectPath": "C:\\Users\\FabianArenas\\source\\repos\\TestingAppQa\\TestingAppQa\\TestingAppQa.csproj",
-        "packagesPath": "C:\\Users\\FabianArenas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\FabianArenas\\source\\repos\\TestingAppQa\\TestingAppQa\\obj\\",
+        "projectPath": "C:\\Users\\arena\\Source\\Repos\\proyectoMiguel\\TestingAppQa\\TestingAppQa.csproj",
+        "packagesPath": "C:\\Users\\arena\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\arena\\Source\\Repos\\proyectoMiguel\\TestingAppQa\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\FabianArenas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\arena\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -89,7 +89,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -101,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -9,8 +9,8 @@ using TestingAppQa.Data;
 namespace TestingAppQa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221205000311_migracioninicial")]
-    partial class migracioninicial
+    [Migration("20230305034805_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
