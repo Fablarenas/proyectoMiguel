@@ -112,7 +112,7 @@ namespace TestingAppQa.Controllers
             {
                 return View("UsuarioExistentes");
             }
-            TaskReview taskReview1 = new TaskReview() { Title = taskReview.Title , Description= taskReview.Description, History = userHistories, ReponsabilityUser = user, Project = project , State = "PENDIENTE" , TaskState = "PENDIENTE" };
+            TaskReview taskReview1 = new TaskReview() { Title = taskReview.Title , Description= taskReview.Description, History = userHistories, ReponsabilityUser = user, Project = project , State = "PENDIENTE" , TaskState = "PENDIENTE" , Date = System.DateTime.Now };
             if (ModelState.IsValid)
             {
                 _context.Add(taskReview1);

@@ -29,7 +29,7 @@ namespace TestingAppQa.Controllers
             var user = await _userManager.GetUserAsync(User);
             List<TestCase> testCases = await (from e in _context.TestCase
                                             join p in _context.ProjectUser
-                                            on e.IdTestCase equals p.User.IdHUActive
+                                            on e.HistoryUser.IdUserHistory equals p.User.IdHUActive
                                             where p.User.Id == user.Id
                                             select e).ToListAsync();
             //var data = await _context.Project.ToListAsync();

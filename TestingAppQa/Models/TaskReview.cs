@@ -23,5 +23,9 @@ namespace TestingAppQa.Models
         public Project Project { get; set; }
         public string DeveloperId { get; set; }
         public string ReportState { get; set; }
+        public DateTime Date
+        {
+            get; set;
+        }
     }
 }

@@ -38,8 +38,8 @@
                                             <p>@Html.DisplayFor(modelItem => item.HU.Title)</p>
                                         </td>
                                         <td>@Html.DisplayFor(modelItem => item.Descripcion) </td>
-                                        <td> <span class="name">@Html.DisplayFor(modelItem => item.FechaSolucion)</span> </td>
-                                        <td> <span class="product">@Html.DisplayFor(modelItem => item.FechaReporte)</span> </td>
+                                            <td> <span class="name">@Html.DisplayFor(modelItem => item.FechaReporte)</span> </td>
+                                        <td> <span class="product">@Html.DisplayFor(modelItem => item.FechaSolucion)</span> </td>
                                         <td>
                                             @*comboboxDesarrolladores*@
                                             <select id="@item.selectedId" onchange="showInPopupdesarrolladores('@Url.Action("AssignDeveloperConfirm","ConsolidationReports",new {idtask = item.Id},Context.Request.Scheme)', '',@item.Id.ToString())" asp-for="@item.IdDesarrollador" asp-items="@item.Desarrolladores">

@@ -62,7 +62,9 @@ namespace TestingAppQa.Controllers
                 report.Analista = userss;
                 report.HU = userHistory;
                 report.Descripcion = item.Description;
-                report.FechaReporte = item.DateComplete;
+                report.FechaReporte = item.Date;
+                report.FechaSolucion = item.DateComplete;
+
                 report.Desarrolladores = listDeveloperts;
                 report.IdDesarrollador = item.DeveloperId;
                 report.Id = item.IdTask;
