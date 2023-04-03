@@ -25,7 +25,10 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Index()
         {
             List<TaskReview> datos = new List<TaskReview>();
-            var data = await _context.TaskReview.ToListAsync();
+            var useractive = await _userManager.GetUserAsync(User);
+            List<TaskReview> data = await (from a in _context.TaskReview
+                                              where a.History.IdUserHistory == useractive.IdHUActive
+                                              select a).ToListAsync();
             foreach (var item in data)
             {
                 UserHistory hu = await (from u in _context.UserHistory

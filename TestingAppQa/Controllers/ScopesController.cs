@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,22 @@ namespace TestingAppQa.Controllers
     public class ScopesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public ScopesController(ApplicationDbContext context)
+        public ScopesController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Scopes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Scope.ToListAsync());
+            var user = await _userManager.GetUserAsync(User);
+            List<Scope> scopes = await (from a in _context.Scope
+                                              where a.Project.IdProject == user.IdProjectActive
+                                              select a).ToListAsync();
+            return View(scopes);
         }
 
         // GET: Scopes/Details/5
@@ -56,6 +63,11 @@ namespace TestingAppQa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdTool,NameModule,TestGoal,Considerations")] Scope scope)
         {
+            var user = await _userManager.GetUserAsync(User);
+            Project project = await (from a in _context.Project
+                                              where a.IdProject == user.IdProjectActive
+                                              select a).FirstOrDefaultAsync();
+            scope.Project = project;
             if (ModelState.IsValid)
             {
                 _context.Add(scope);

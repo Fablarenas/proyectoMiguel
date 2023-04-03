@@ -27,11 +27,9 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            List<TestCase> testCases = await (from e in _context.TestCase
-                                            join p in _context.ProjectUser
-                                            on e.HistoryUser.IdUserHistory equals p.User.IdHUActive
-                                            where p.User.Id == user.Id
-                                            select e).ToListAsync();
+            List<TestCase> testCases = await (from a in _context.TestCase
+                                              where a.HistoryUser.IdUserHistory == user.IdHUActive
+                                              select a).ToListAsync();
             //var data = await _context.Project.ToListAsync();
             return View(testCases);
         }

@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\TestingAppQa"
   ],
-  "SelectedNode": "\\TestingAppQa.sln",
+  "SelectedNode": "\\TestingAppQa\\appsettings.json",
   "PreviewInSolutionExplorer": false
 }

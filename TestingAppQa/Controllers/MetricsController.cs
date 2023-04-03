@@ -280,9 +280,7 @@ namespace TestingAppQa.Controllers
                                                      select s).ToListAsync();
 
             List<TestCase> testCases = await (from e in _context.TestCase
-                                              join p in _context.ProjectUser
-                                              on e.IdTestCase equals p.User.IdHUActive
-                                              where p.User.Id == user.Id
+                                              where e.HistoryUser.IdUserHistory == user.IdHUActive
                                               select e).ToListAsync();
 
             var project = await _context.Project.FindAsync(user.IdProjectActive);
@@ -358,7 +356,7 @@ namespace TestingAppQa.Controllers
                     if (test.HistoryUser.IdUserHistory == item.IdUserHistory)
                     {
                         tableHu.AddCell("ID Caso:" + test.IdTestCase);
-                        tableHu.AddCell("DescripcionCaso" + test.Var);
+                        tableHu.AddCell("DescripcionCaso:" + test.Var);
                     }
                     else
                     {
