@@ -28,8 +28,13 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Index()
         {
             List<ConsolidationReportVm> datos = new List<ConsolidationReportVm>();
-            var data = _context.TaskReview.ToListAsync().Result.Where(x => x.TaskState == "COMPLETADO");
             var user = await _userManager.GetUserAsync(User);
+            var data = await (from t in _context.TaskReview
+                              join p in _context.Project
+                                      on t.Project.IdProject equals p.IdProject
+                                      where p.IdProject == user.IdProjectActive
+                                      where t.TaskState == "COMPLETADO"
+                              select t ).ToListAsync();
 
             List<User> users = await (from p in _context.ProjectUser
                                                     join u in _context.user
