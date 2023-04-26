@@ -9,8 +9,8 @@ using TestingAppQa.Data;
 namespace TestingAppQa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230425210910_initial")]
-    partial class initial
+    [Migration("20230426192104_addmi")]
+    partial class addmi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -282,9 +282,6 @@ namespace TestingAppQa.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("ProjectIdProject")
-                        .HasColumnType("int");
-
                     b.Property<string>("RiskDependency")
                         .HasColumnType("longtext");
 
@@ -292,8 +289,6 @@ namespace TestingAppQa.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IdRisk");
-
-                    b.HasIndex("ProjectIdProject");
 
                     b.HasIndex("UserHistoryIdUserHistory");
 
@@ -326,9 +321,6 @@ namespace TestingAppQa.Migrations
                     b.Property<string>("NameModule")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("ProjectIdProject")
-                        .HasColumnType("int");
-
                     b.Property<string>("TestGoal")
                         .HasColumnType("longtext");
 
@@ -336,8 +328,6 @@ namespace TestingAppQa.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IdScope");
-
-                    b.HasIndex("ProjectIdProject");
 
                     b.HasIndex("UserHistoryIdUserHistory");
 
@@ -700,28 +690,20 @@ namespace TestingAppQa.Migrations
 
             modelBuilder.Entity("TestingAppQa.Models.Risk", b =>
                 {
-                    b.HasOne("TestingAppQa.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectIdProject");
-
-                    b.HasOne("TestingAppQa.Models.UserHistory", null)
+                    b.HasOne("TestingAppQa.Models.UserHistory", "UserHistory")
                         .WithMany("Risks")
                         .HasForeignKey("UserHistoryIdUserHistory");
 
-                    b.Navigation("Project");
+                    b.Navigation("UserHistory");
                 });
 
             modelBuilder.Entity("TestingAppQa.Models.Scope", b =>
                 {
-                    b.HasOne("TestingAppQa.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectIdProject");
-
-                    b.HasOne("TestingAppQa.Models.UserHistory", null)
+                    b.HasOne("TestingAppQa.Models.UserHistory", "UserHistory")
                         .WithMany("Scopes")
                         .HasForeignKey("UserHistoryIdUserHistory");
 
-                    b.Navigation("Project");
+                    b.Navigation("UserHistory");
                 });
 
             modelBuilder.Entity("TestingAppQa.Models.Sprint", b =>

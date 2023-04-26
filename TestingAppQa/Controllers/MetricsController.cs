@@ -62,8 +62,10 @@ namespace TestingAppQa.Controllers
 
             List<Metrics> email = await (from t in _context.TaskReview
                                          join us in _context.user
-                                          on t.DeveloperId equals us.Id
-                                         where t.History.IdUserHistory == user.IdHUActive
+                                         on t.DeveloperId equals us.Id
+                                         join hu in _context.UserHistory
+                                         on t.History.IdUserHistory equals hu.IdUserHistory
+                                         where hu.SprintHistoryUser.IdSprint == user.IdSprintActive
                                          where t.ReportState == "SOLUCIONADO"
                                          group t by t.DeveloperId into newgroup
                                          select new Metrics { Desarrollador = newgroup.Key.ToString(), CantidadTareasDesarrollador = newgroup.Count() }).ToListAsync();
@@ -80,8 +82,10 @@ namespace TestingAppQa.Controllers
             List<Metrics> analistas = await (from t in _context.TaskReview
                                          join us in _context.user
                                           on t.ReponsabilityUser.Id equals us.Id
-                                         where t.History.IdUserHistory == user.IdHUActive
-                                         where t.State == "NOEXITOSO"
+                                             join hu in _context.UserHistory
+                                             on t.History.IdUserHistory equals hu.IdUserHistory
+                                             where hu.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                             where t.State == "NOEXITOSO"
                                             group t by t.ReponsabilityUser.Id into newgroup
                                          select new Metrics { Analista = newgroup.Key.ToString(), CantidadReportadosAnalista = newgroup.Count() }).ToListAsync();
 
@@ -98,13 +102,17 @@ namespace TestingAppQa.Controllers
 
 
             List<TaskReview> noexitosos = await (from t in _context.TaskReview
-                                       where t.History.IdUserHistory == user.IdHUActive
-                                       where t.State == "NOEXITOSO"
+                                                 join hu in _context.UserHistory
+                                                 on t.History.IdUserHistory equals hu.IdUserHistory
+                                                 where hu.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                                 where t.State == "NOEXITOSO"
                                        select t).ToListAsync();
 
             List<TaskReview> exitosos = await (from t in _context.TaskReview
-                                       where t.History.IdUserHistory == user.IdHUActive
-                                       where t.State == "EXITOSO"
+                                               join hu in _context.UserHistory
+                                               on t.History.IdUserHistory equals hu.IdUserHistory
+                                               where hu.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                               where t.State == "EXITOSO"
                                        select t).ToListAsync();
             decimal exitososdecimal = Decimal.Parse(exitosos.Count.ToString());
            decimal  noexitososdecimal = Decimal.Parse(noexitosos.Count.ToString());
@@ -367,9 +375,10 @@ namespace TestingAppQa.Controllers
             tableHu.SpacingAfter = 20;
             document.Add(tableHu);
             //////////////////////////////////////FIN TABLA CASOS DE PRUEBA////////////////
-            List<Risk> risks = await (from r in _context.Risk
-                                      where r.UserHistory.IdUserHistory == user.IdHUActive
-                                      select r).ToListAsync();
+            List<Risk> risks = await (from uh in _context.UserHistory
+                                              join tc in _context.Risk on uh.IdUserHistory equals tc.UserHistory.IdUserHistory
+                                              where uh.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                              select tc).ToListAsync();
 
             PdfPTable tableRisk = new PdfPTable(3);
             var tablerisktittle = new Paragraph("RIESGOS", FontBigTitle);
@@ -390,15 +399,19 @@ namespace TestingAppQa.Controllers
             }
 
             document.Add(tableRisk);
-            List<Scope> scopes = await(from r in _context.Scope
-                                       where r.UserHistory.IdUserHistory == user.IdHUActive
-                                       select r).ToListAsync();
 
-            PdfPTable tableScope = new PdfPTable(4);
-            PdfPCell cellWithRowspantableScope = new PdfPCell(new Phrase("Alcances"));
-            cellWithRowspantableScope.Colspan = 4;
+            List<Scope> scopes = await (from uh in _context.UserHistory
+                                      join tc in _context.Scope on uh.IdUserHistory equals tc.UserHistory.IdUserHistory
+                                      where uh.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                      select tc).ToListAsync();
 
-            tableScope.AddCell(cellWithRowspantableScope);
+            PdfPTable tableScope = new PdfPTable(3);
+            var tablescopetittle = new Paragraph("RIESGOS", FontBigTitle);
+            BigTitle.Alignment = Element.ALIGN_CENTER;
+            PdfPCell cellWithRowspanScope = new PdfPCell(tablescopetittle);
+            cellWithRowspanScope.Colspan = 4;
+
+            tableScope.AddCell(cellWithRowspanScope);
             tableScope.AddCell("Nombre Modulo");
             tableScope.AddCell("Objetivo de la prueba");
             tableScope.AddCell("Consideraciones");
@@ -412,9 +425,10 @@ namespace TestingAppQa.Controllers
             tableScope.SpacingAfter = 20;
             document.Add(tableScope);
 
-            List<Tools> tools = await(from r in _context.Tools
-                                      where r.UserHistory.IdUserHistory == user.IdProjectActive
-                                      select r).ToListAsync();
+            List<Tools> tools = await(from uh in _context.UserHistory
+                                      join tc in _context.Tools on uh.IdUserHistory equals tc.UserHistory.IdUserHistory
+                                      where uh.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                      select tc).ToListAsync();
 
             PdfPTable tableTools = new PdfPTable(3);
             PdfPCell cellWithRowspantools = new PdfPCell(new Phrase("Herramientas"));

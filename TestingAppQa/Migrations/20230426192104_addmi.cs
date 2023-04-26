@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TestingAppQa.Migrations
 {
-    public partial class initial : Migration
+    public partial class addmi : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -402,18 +402,11 @@ namespace TestingAppQa.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RiskDependency = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProjectIdProject = table.Column<int>(type: "int", nullable: true),
                     UserHistoryIdUserHistory = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Risk", x => x.IdRisk);
-                    table.ForeignKey(
-                        name: "FK_Risk_Project_ProjectIdProject",
-                        column: x => x.ProjectIdProject,
-                        principalTable: "Project",
-                        principalColumn: "IdProject",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Risk_UserHistory_UserHistoryIdUserHistory",
                         column: x => x.UserHistoryIdUserHistory,
@@ -435,18 +428,11 @@ namespace TestingAppQa.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Considerations = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProjectIdProject = table.Column<int>(type: "int", nullable: true),
                     UserHistoryIdUserHistory = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Scope", x => x.IdScope);
-                    table.ForeignKey(
-                        name: "FK_Scope_Project_ProjectIdProject",
-                        column: x => x.ProjectIdProject,
-                        principalTable: "Project",
-                        principalColumn: "IdProject",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Scope_UserHistory_UserHistoryIdUserHistory",
                         column: x => x.UserHistoryIdUserHistory,
@@ -651,19 +637,9 @@ namespace TestingAppQa.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Risk_ProjectIdProject",
-                table: "Risk",
-                column: "ProjectIdProject");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Risk_UserHistoryIdUserHistory",
                 table: "Risk",
                 column: "UserHistoryIdUserHistory");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Scope_ProjectIdProject",
-                table: "Scope",
-                column: "ProjectIdProject");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Scope_UserHistoryIdUserHistory",
