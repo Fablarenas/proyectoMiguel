@@ -16,6 +16,6 @@ namespace TestingAppQa.Models
         public string MitigationStrategy { get; set; }
         public string RiskDependency { get; set; }
 
-        public Project Project { get; set; }
+        public UserHistory UserHistory { get; set; }
     }
 }

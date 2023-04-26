@@ -9,8 +9,8 @@ using TestingAppQa.Data;
 namespace TestingAppQa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230310010857_date")]
-    partial class date
+    [Migration("20230425210910_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -288,9 +288,14 @@ namespace TestingAppQa.Migrations
                     b.Property<string>("RiskDependency")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("UserHistoryIdUserHistory")
+                        .HasColumnType("int");
+
                     b.HasKey("IdRisk");
 
                     b.HasIndex("ProjectIdProject");
+
+                    b.HasIndex("UserHistoryIdUserHistory");
 
                     b.ToTable("Risk");
                 });
@@ -327,9 +332,14 @@ namespace TestingAppQa.Migrations
                     b.Property<string>("TestGoal")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("UserHistoryIdUserHistory")
+                        .HasColumnType("int");
+
                     b.HasKey("IdScope");
 
                     b.HasIndex("ProjectIdProject");
+
+                    b.HasIndex("UserHistoryIdUserHistory");
 
                     b.ToTable("Scope");
                 });
@@ -465,18 +475,18 @@ namespace TestingAppQa.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("ProjectIdProject")
-                        .HasColumnType("int");
-
                     b.Property<string>("Specification")
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("UserHistoryIdUserHistory")
+                        .HasColumnType("int");
 
                     b.Property<string>("Version")
                         .HasColumnType("longtext");
 
                     b.HasKey("IdTool");
 
-                    b.HasIndex("ProjectIdProject");
+                    b.HasIndex("UserHistoryIdUserHistory");
 
                     b.ToTable("Tools");
                 });
@@ -691,8 +701,12 @@ namespace TestingAppQa.Migrations
             modelBuilder.Entity("TestingAppQa.Models.Risk", b =>
                 {
                     b.HasOne("TestingAppQa.Models.Project", "Project")
-                        .WithMany("Risks")
+                        .WithMany()
                         .HasForeignKey("ProjectIdProject");
+
+                    b.HasOne("TestingAppQa.Models.UserHistory", null)
+                        .WithMany("Risks")
+                        .HasForeignKey("UserHistoryIdUserHistory");
 
                     b.Navigation("Project");
                 });
@@ -700,8 +714,12 @@ namespace TestingAppQa.Migrations
             modelBuilder.Entity("TestingAppQa.Models.Scope", b =>
                 {
                     b.HasOne("TestingAppQa.Models.Project", "Project")
-                        .WithMany("Scopes")
+                        .WithMany()
                         .HasForeignKey("ProjectIdProject");
+
+                    b.HasOne("TestingAppQa.Models.UserHistory", null)
+                        .WithMany("Scopes")
+                        .HasForeignKey("UserHistoryIdUserHistory");
 
                     b.Navigation("Project");
                 });
@@ -756,11 +774,11 @@ namespace TestingAppQa.Migrations
 
             modelBuilder.Entity("TestingAppQa.Models.Tools", b =>
                 {
-                    b.HasOne("TestingAppQa.Models.Project", "Project")
+                    b.HasOne("TestingAppQa.Models.UserHistory", "UserHistory")
                         .WithMany("Tools")
-                        .HasForeignKey("ProjectIdProject");
+                        .HasForeignKey("UserHistoryIdUserHistory");
 
-                    b.Navigation("Project");
+                    b.Navigation("UserHistory");
                 });
 
             modelBuilder.Entity("TestingAppQa.Models.UserHistory", b =>
@@ -776,15 +794,9 @@ namespace TestingAppQa.Migrations
                 {
                     b.Navigation("ProjectUsers");
 
-                    b.Navigation("Risks");
-
-                    b.Navigation("Scopes");
-
                     b.Navigation("Sprints");
 
                     b.Navigation("TaskReviews");
-
-                    b.Navigation("Tools");
                 });
 
             modelBuilder.Entity("TestingAppQa.Models.Rols", b =>
@@ -810,9 +822,15 @@ namespace TestingAppQa.Migrations
 
                     b.Navigation("ReviewTask");
 
+                    b.Navigation("Risks");
+
+                    b.Navigation("Scopes");
+
                     b.Navigation("TestCases");
 
                     b.Navigation("TimeOuts");
+
+                    b.Navigation("Tools");
                 });
 #pragma warning restore 612, 618
         }

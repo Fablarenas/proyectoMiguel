@@ -271,17 +271,15 @@ namespace TestingAppQa.Controllers
 
             var user = await _userManager.GetUserAsync(User);
 
-            UserHistory userHistory = await (from s in _context.UserHistory
-                                                     where s.SprintHistoryUser.IdSprint == user.IdSprintActive
-                                                     select s).SingleAsync();
 
             List<UserHistory> userHistories = await (from s in _context.UserHistory
                                                      where s.SprintHistoryUser.IdSprint == user.IdSprintActive
                                                      select s).ToListAsync();
 
-            List<TestCase> testCases = await (from e in _context.TestCase
-                                              where e.HistoryUser.IdUserHistory == user.IdHUActive
-                                              select e).ToListAsync();
+            List<TestCase> testCases = await (from uh in _context.UserHistory
+                                              join tc in _context.TestCase on uh.IdUserHistory equals tc.HistoryUser.IdUserHistory
+                                              where uh.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                              select tc).ToListAsync();
 
             var project = await _context.Project.FindAsync(user.IdProjectActive);
 
@@ -370,7 +368,7 @@ namespace TestingAppQa.Controllers
             document.Add(tableHu);
             //////////////////////////////////////FIN TABLA CASOS DE PRUEBA////////////////
             List<Risk> risks = await (from r in _context.Risk
-                                      where r.Project.IdProject == user.IdProjectActive
+                                      where r.UserHistory.IdUserHistory == user.IdHUActive
                                       select r).ToListAsync();
 
             PdfPTable tableRisk = new PdfPTable(3);
@@ -393,7 +391,7 @@ namespace TestingAppQa.Controllers
 
             document.Add(tableRisk);
             List<Scope> scopes = await(from r in _context.Scope
-                                       where r.Project.IdProject == user.IdProjectActive
+                                       where r.UserHistory.IdUserHistory == user.IdHUActive
                                        select r).ToListAsync();
 
             PdfPTable tableScope = new PdfPTable(4);
@@ -402,13 +400,11 @@ namespace TestingAppQa.Controllers
 
             tableScope.AddCell(cellWithRowspantableScope);
             tableScope.AddCell("Nombre Modulo");
-            tableScope.AddCell("Historia de usuario");
             tableScope.AddCell("Objetivo de la prueba");
             tableScope.AddCell("Consideraciones");
             foreach (var item in scopes)
             {
-                tableScope.AddCell(item.NameModule);
-                tableScope.AddCell(userHistory.Title);
+                tableScope.AddCell(item.NameModule);                
                 tableScope.AddCell(item.TestGoal);
                 tableScope.AddCell(item.Considerations);
             }
@@ -417,7 +413,7 @@ namespace TestingAppQa.Controllers
             document.Add(tableScope);
 
             List<Tools> tools = await(from r in _context.Tools
-                                      where r.Project.IdProject == user.IdProjectActive
+                                      where r.UserHistory.IdUserHistory == user.IdProjectActive
                                       select r).ToListAsync();
 
             PdfPTable tableTools = new PdfPTable(3);

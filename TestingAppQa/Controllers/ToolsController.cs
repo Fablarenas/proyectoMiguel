@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TestingAppQa.Data;
 using TestingAppQa.Models;
@@ -28,7 +26,7 @@ namespace TestingAppQa.Controllers
             if (user.IdProjectActive != 0)
             {
             List<Tools> tools = await (from s in _context.Tools
-                                           where s.Project.IdProject == user.IdProjectActive
+                                           where s.UserHistory.IdUserHistory == user.IdHUActive
                                            select s).ToListAsync();
             return View(tools);
             }
@@ -70,8 +68,8 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Create([Bind("IdTool,Name,Version,Specification")] Tools tools)
         {
             var user = await _userManager.GetUserAsync(User);
-            var proyecto = _context.Project.Find(user.IdProjectActive);
-            tools.Project = proyecto;
+            var proyecto = _context.UserHistory.Find(user.IdHUActive);
+            tools.UserHistory = proyecto;
             if (ModelState.IsValid)
             {
                 _context.Add(tools);
@@ -90,12 +88,12 @@ namespace TestingAppQa.Controllers
             }
 
             var tools = await _context.Tools.FindAsync(id);
-            Project project = await (from p in _context.Project
+            UserHistory project = await (from p in _context.UserHistory
                                             join t in _context.Tools
-                                            on p.IdProject equals t.Project.IdProject
+                                            on p.IdUserHistory equals t.UserHistory.IdUserHistory
                                             where t.IdTool == id
                                      select p).FirstOrDefaultAsync();
-            tools.Project = project;
+            tools.UserHistory = project;
             if (tools == null)
             {
                 return NotFound();
@@ -111,12 +109,13 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("IdTool,Name,Version,Specification,Project")] Tools tools)
         {
 
-            Project project = await (from p in _context.Project
+            UserHistory project = await (from p in _context.UserHistory
                                      join t in _context.Tools
-                                     on p.IdProject equals t.Project.IdProject
+                                     on p.IdUserHistory equals t.UserHistory.IdUserHistory
                                      where t.IdTool == id
                                      select p).FirstOrDefaultAsync();
-            tools.Project = project;
+
+            tools.UserHistory = project;
             if (ModelState.IsValid)
             {
                 try

@@ -256,58 +256,6 @@ namespace TestingAppQa.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Risk",
-                columns: table => new
-                {
-                    IdRisk = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    MitigationStrategy = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RiskDependency = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProjectIdProject = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Risk", x => x.IdRisk);
-                    table.ForeignKey(
-                        name: "FK_Risk_Project_ProjectIdProject",
-                        column: x => x.ProjectIdProject,
-                        principalTable: "Project",
-                        principalColumn: "IdProject",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Scope",
-                columns: table => new
-                {
-                    IdScope = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NameModule = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    TestGoal = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Considerations = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProjectIdProject = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Scope", x => x.IdScope);
-                    table.ForeignKey(
-                        name: "FK_Scope_Project_ProjectIdProject",
-                        column: x => x.ProjectIdProject,
-                        principalTable: "Project",
-                        principalColumn: "IdProject",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Sprint",
                 columns: table => new
                 {
@@ -322,32 +270,6 @@ namespace TestingAppQa.Migrations
                     table.PrimaryKey("PK_Sprint", x => x.IdSprint);
                     table.ForeignKey(
                         name: "FK_Sprint_Project_ProjectIdProject",
-                        column: x => x.ProjectIdProject,
-                        principalTable: "Project",
-                        principalColumn: "IdProject",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Tools",
-                columns: table => new
-                {
-                    IdTool = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Version = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Specification = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProjectIdProject = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tools", x => x.IdTool);
-                    table.ForeignKey(
-                        name: "FK_Tools_Project_ProjectIdProject",
                         column: x => x.ProjectIdProject,
                         principalTable: "Project",
                         principalColumn: "IdProject",
@@ -469,6 +391,72 @@ namespace TestingAppQa.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Risk",
+                columns: table => new
+                {
+                    IdRisk = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MitigationStrategy = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    RiskDependency = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProjectIdProject = table.Column<int>(type: "int", nullable: true),
+                    UserHistoryIdUserHistory = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Risk", x => x.IdRisk);
+                    table.ForeignKey(
+                        name: "FK_Risk_Project_ProjectIdProject",
+                        column: x => x.ProjectIdProject,
+                        principalTable: "Project",
+                        principalColumn: "IdProject",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Risk_UserHistory_UserHistoryIdUserHistory",
+                        column: x => x.UserHistoryIdUserHistory,
+                        principalTable: "UserHistory",
+                        principalColumn: "IdUserHistory",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Scope",
+                columns: table => new
+                {
+                    IdScope = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    NameModule = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TestGoal = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Considerations = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProjectIdProject = table.Column<int>(type: "int", nullable: true),
+                    UserHistoryIdUserHistory = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Scope", x => x.IdScope);
+                    table.ForeignKey(
+                        name: "FK_Scope_Project_ProjectIdProject",
+                        column: x => x.ProjectIdProject,
+                        principalTable: "Project",
+                        principalColumn: "IdProject",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Scope_UserHistory_UserHistoryIdUserHistory",
+                        column: x => x.UserHistoryIdUserHistory,
+                        principalTable: "UserHistory",
+                        principalColumn: "IdUserHistory",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "TaskReview",
                 columns: table => new
                 {
@@ -490,7 +478,8 @@ namespace TestingAppQa.Migrations
                     DeveloperId = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReportState = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -562,6 +551,32 @@ namespace TestingAppQa.Migrations
                     table.ForeignKey(
                         name: "FK_TimeOut_UserHistory_HuIdUserHistory",
                         column: x => x.HuIdUserHistory,
+                        principalTable: "UserHistory",
+                        principalColumn: "IdUserHistory",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Tools",
+                columns: table => new
+                {
+                    IdTool = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Version = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Specification = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserHistoryIdUserHistory = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tools", x => x.IdTool);
+                    table.ForeignKey(
+                        name: "FK_Tools_UserHistory_UserHistoryIdUserHistory",
+                        column: x => x.UserHistoryIdUserHistory,
                         principalTable: "UserHistory",
                         principalColumn: "IdUserHistory",
                         onDelete: ReferentialAction.Restrict);
@@ -641,9 +656,19 @@ namespace TestingAppQa.Migrations
                 column: "ProjectIdProject");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Risk_UserHistoryIdUserHistory",
+                table: "Risk",
+                column: "UserHistoryIdUserHistory");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Scope_ProjectIdProject",
                 table: "Scope",
                 column: "ProjectIdProject");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Scope_UserHistoryIdUserHistory",
+                table: "Scope",
+                column: "UserHistoryIdUserHistory");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sprint_ProjectIdProject",
@@ -676,9 +701,9 @@ namespace TestingAppQa.Migrations
                 column: "HuIdUserHistory");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tools_ProjectIdProject",
+                name: "IX_Tools_UserHistoryIdUserHistory",
                 table: "Tools",
-                column: "ProjectIdProject");
+                column: "UserHistoryIdUserHistory");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserHistory_SprintHistoryUserIdSprint",

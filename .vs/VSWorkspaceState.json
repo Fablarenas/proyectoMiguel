@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\TestingAppQa"
+    "\\TestingAppQa",
+    "\\TestingAppQa\\Controllers"
   ],
-  "SelectedNode": "\\TestingAppQa\\appsettings.json",
+  "SelectedNode": "\\TestingAppQa\\Controllers\\MetricsController.cs",
   "PreviewInSolutionExplorer": false
 }

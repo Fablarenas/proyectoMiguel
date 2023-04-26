@@ -31,5 +31,8 @@ namespace TestingAppQa.Models
         public List<TimeOut> TimeOuts { get; set; }
         public List<TaskReview> ReviewTask { get; set; }
         public List<ConsolidationReport> Report { get; set; }
+        public  List<Tools> Tools{ get; set; }
+        public  List<Risk> Risks{ get; set; }
+        public  List<Scope> Scopes{ get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace TestingAppQa.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             List<Scope> scopes = await (from a in _context.Scope
-                                              where a.Project.IdProject == user.IdProjectActive
+                                              where a.UserHistory.IdUserHistory == user.IdHUActive
                                               select a).ToListAsync();
             return View(scopes);
         }
@@ -64,10 +64,10 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Create([Bind("IdTool,NameModule,TestGoal,Considerations")] Scope scope)
         {
             var user = await _userManager.GetUserAsync(User);
-            Project project = await (from a in _context.Project
-                                              where a.IdProject == user.IdProjectActive
+            UserHistory project = await (from a in _context.UserHistory
+                                         where a.IdUserHistory == user.IdHUActive
                                               select a).FirstOrDefaultAsync();
-            scope.Project = project;
+            scope.UserHistory = project;
             if (ModelState.IsValid)
             {
                 _context.Add(scope);

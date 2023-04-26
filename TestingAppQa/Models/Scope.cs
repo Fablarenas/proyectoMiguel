@@ -12,6 +12,6 @@ namespace TestingAppQa.Models
         public string TestGoal { get; set; }
         public string Considerations { get; set; }
 
-        public Project Project { get; set; }
+        public UserHistory UserHistory { get; set; }
     }
 }

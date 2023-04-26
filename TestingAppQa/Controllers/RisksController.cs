@@ -28,7 +28,7 @@ namespace TestingAppQa.Controllers
             if (user.IdProjectActive != 0)
             {
                 List<Risk> risks = await (from r in _context.Risk
-                                           where r.Project.IdProject == user.IdProjectActive
+                                           where r.UserHistory.IdUserHistory == user.IdHUActive
                                            select r).ToListAsync();
                 return View(risks);
             }
@@ -70,8 +70,8 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Create([Bind("IdRisk,Name,MitigationStrategy,RiskDependency")] Risk risk)
         {
             var user = await _userManager.GetUserAsync(User);
-            var proyecto = _context.Project.Find(user.IdProjectActive);
-            risk.Project = proyecto;
+            var proyecto = _context.UserHistory.Find(user.IdProjectActive);
+            risk.UserHistory = proyecto;
             if (ModelState.IsValid)
             {
                 _context.Add(risk);

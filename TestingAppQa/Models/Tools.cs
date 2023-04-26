@@ -18,6 +18,6 @@ namespace TestingAppQa.Models
         public string Version { get; set; }
         public string Specification { get; set; }
 
-        public Project Project { get; set; }
+        public UserHistory UserHistory { get; set; }
     }
 }

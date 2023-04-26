@@ -26,9 +26,13 @@ namespace TestingAppQa.Controllers
         {
             List<TaskReview> datos = new List<TaskReview>();
             var useractive = await _userManager.GetUserAsync(User);
-            List<TaskReview> data = await (from a in _context.TaskReview
-                                              where a.History.IdUserHistory == useractive.IdHUActive
-                                              select a).ToListAsync();
+
+            List<TaskReview> data = await (from t in _context.TaskReview
+                        join u in _context.UserHistory on t.History.IdUserHistory equals u.IdUserHistory
+                        join s in _context.sprint on u.SprintHistoryUser.IdSprint equals s.IdSprint
+                        where s.IdSprint == useractive.IdSprintActive
+                        select t).ToListAsync();
+
             foreach (var item in data)
             {
                 UserHistory hu = await (from u in _context.UserHistory
@@ -46,10 +50,7 @@ namespace TestingAppQa.Controllers
                 item.ReponsabilityUser = user;
                 datos.Add(item);
             }
-
-
             //var user = await _userManager.FindByEmailAsync(taskReview.ReponsabilityUser);
-
             return View(datos);
         }
 
