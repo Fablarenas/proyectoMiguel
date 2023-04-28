@@ -27,8 +27,13 @@
                 <div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success">Confirmar</button>
+
                 </div>
             </div>
+
+        </form>
+        <form asp-controller="UserHistories" asp-action="Delete" asp-route-id="@Model.IdUserHistory" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">Borrar</button>
         </form>
     </div>
 </div>

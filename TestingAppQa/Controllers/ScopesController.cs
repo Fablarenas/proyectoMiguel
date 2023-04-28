@@ -65,8 +65,8 @@ namespace TestingAppQa.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             UserHistory project = await (from a in _context.UserHistory
-                                         where a.IdUserHistory == user.IdHUActive
-                                              select a).FirstOrDefaultAsync();
+                                         where a.IdUserHistory == user.IdHUActive && a.IsDeleted == false
+                                         select a).FirstOrDefaultAsync();
             scope.UserHistory = project;
             if (ModelState.IsValid)
             {

@@ -34,5 +34,10 @@ namespace TestingAppQa.Models
         public  List<Tools> Tools{ get; set; }
         public  List<Risk> Risks{ get; set; }
         public  List<Scope> Scopes{ get; set; }
+
+        public bool IsDeleted
+        {
+            get; set;
+        }
     }
 }

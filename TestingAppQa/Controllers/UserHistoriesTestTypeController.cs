@@ -29,7 +29,7 @@ namespace TestingAppQa.Controllers
             if (user.IdSprintActive != 0)
             {
                 List<UserHistory> userHistories = await (from s in _context.UserHistory
-                                                         where s.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                                         where s.SprintHistoryUser.IdSprint == user.IdSprintActive && s.IsDeleted == false
                                                          select s).ToListAsync();
                 return View(userHistories);
             }

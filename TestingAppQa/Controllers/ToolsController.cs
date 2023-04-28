@@ -91,8 +91,8 @@ namespace TestingAppQa.Controllers
             UserHistory project = await (from p in _context.UserHistory
                                             join t in _context.Tools
                                             on p.IdUserHistory equals t.UserHistory.IdUserHistory
-                                            where t.IdTool == id
-                                     select p).FirstOrDefaultAsync();
+                                            where t.IdTool == id && p.IsDeleted == false
+                                         select p).FirstOrDefaultAsync();
             tools.UserHistory = project;
             if (tools == null)
             {
@@ -112,8 +112,8 @@ namespace TestingAppQa.Controllers
             UserHistory project = await (from p in _context.UserHistory
                                      join t in _context.Tools
                                      on p.IdUserHistory equals t.UserHistory.IdUserHistory
-                                     where t.IdTool == id
-                                     select p).FirstOrDefaultAsync();
+                                     where t.IdTool == id && p.IsDeleted == false
+                                         select p).FirstOrDefaultAsync();
 
             tools.UserHistory = project;
             if (ModelState.IsValid)

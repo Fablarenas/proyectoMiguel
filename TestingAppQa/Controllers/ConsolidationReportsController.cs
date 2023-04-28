@@ -63,6 +63,7 @@ namespace TestingAppQa.Controllers
                                    join u in _context.UserHistory
                                    on t.History.IdUserHistory equals u.IdUserHistory
                                    where t.IdTask == item.IdTask
+                                   && u.IsDeleted == false
                                    select u).SingleAsync();
                 report.Analista = userss;
                 report.HU = userHistory;

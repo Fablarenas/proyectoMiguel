@@ -39,6 +39,7 @@ namespace TestingAppQa.Controllers
             var user = await _userManager.GetUserAsync(User);
             UserHistory userHistories = await (from s in _context.UserHistory
                                                      where s.IdUserHistory == user.IdHUActive
+                                                     && s.IsDeleted == false
                                                      select s).FirstOrDefaultAsync();
 
             List<Metrics> email = await (from t in _context.TaskReview
@@ -57,7 +58,7 @@ namespace TestingAppQa.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             UserHistory userHistories = await (from s in _context.UserHistory
-                                               where s.IdUserHistory == user.IdHUActive
+                                               where s.IdUserHistory == user.IdHUActive && s.IsDeleted == false
                                                select s).FirstOrDefaultAsync();
 
             List<Metrics> email = await (from t in _context.TaskReview
@@ -66,7 +67,7 @@ namespace TestingAppQa.Controllers
                                          join hu in _context.UserHistory
                                          on t.History.IdUserHistory equals hu.IdUserHistory
                                          where hu.SprintHistoryUser.IdSprint == user.IdSprintActive
-                                         where t.ReportState == "SOLUCIONADO"
+                                         where t.ReportState == "SOLUCIONADO" && hu.IsDeleted == false
                                          group t by t.DeveloperId into newgroup
                                          select new Metrics { Desarrollador = newgroup.Key.ToString(), CantidadTareasDesarrollador = newgroup.Count() }).ToListAsync();
             List<string> milistadesarrolladores = new List<string>();
@@ -86,7 +87,8 @@ namespace TestingAppQa.Controllers
                                              on t.History.IdUserHistory equals hu.IdUserHistory
                                              where hu.SprintHistoryUser.IdSprint == user.IdSprintActive
                                              where t.State == "NOEXITOSO"
-                                            group t by t.ReponsabilityUser.Id into newgroup
+                                             && hu.IsDeleted == false
+                                             group t by t.ReponsabilityUser.Id into newgroup
                                          select new Metrics { Analista = newgroup.Key.ToString(), CantidadReportadosAnalista = newgroup.Count() }).ToListAsync();
 
 
@@ -105,15 +107,15 @@ namespace TestingAppQa.Controllers
                                                  join hu in _context.UserHistory
                                                  on t.History.IdUserHistory equals hu.IdUserHistory
                                                  where hu.SprintHistoryUser.IdSprint == user.IdSprintActive
-                                                 where t.State == "NOEXITOSO"
-                                       select t).ToListAsync();
+                                                 where t.State == "NOEXITOSO" && hu.IsDeleted == false
+                                                 select t).ToListAsync();
 
             List<TaskReview> exitosos = await (from t in _context.TaskReview
                                                join hu in _context.UserHistory
                                                on t.History.IdUserHistory equals hu.IdUserHistory
                                                where hu.SprintHistoryUser.IdSprint == user.IdSprintActive
-                                               where t.State == "EXITOSO"
-                                       select t).ToListAsync();
+                                               where t.State == "EXITOSO" && hu.IsDeleted == false
+                                               select t).ToListAsync();
             decimal exitososdecimal = Decimal.Parse(exitosos.Count.ToString());
            decimal  noexitososdecimal = Decimal.Parse(noexitosos.Count.ToString());
 
@@ -127,6 +129,7 @@ namespace TestingAppQa.Controllers
                                                   on s.IdSprint equals user.IdSprintActive
                                                   join t in _context.TimeOut
                                                   on u.IdUserHistory equals t.Hu.IdUserHistory
+                                                  where  u.IsDeleted == false
                                                   select t).ToListAsync();
 
             List<DateTime> listafechas = new List<DateTime>();
@@ -281,12 +284,12 @@ namespace TestingAppQa.Controllers
 
 
             List<UserHistory> userHistories = await (from s in _context.UserHistory
-                                                     where s.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                                     where s.SprintHistoryUser.IdSprint == user.IdSprintActive && s.IsDeleted == false
                                                      select s).ToListAsync();
 
             List<TestCase> testCases = await (from uh in _context.UserHistory
                                               join tc in _context.TestCase on uh.IdUserHistory equals tc.HistoryUser.IdUserHistory
-                                              where uh.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                              where uh.SprintHistoryUser.IdSprint == user.IdSprintActive && uh.IsDeleted == false
                                               select tc).ToListAsync();
 
             var project = await _context.Project.FindAsync(user.IdProjectActive);
@@ -304,7 +307,7 @@ namespace TestingAppQa.Controllers
             document.AddTitle("The document title - PDF creation using iTextSharp");
 
 
-            // Open the document to enable you to write to the document  
+            // Open the document to enable you to write to the document
             document.Open();
             var pathImage = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\MyFiles", "Logo.png");
             Image img3 = Image.GetInstance(pathImage);
@@ -377,8 +380,8 @@ namespace TestingAppQa.Controllers
             //////////////////////////////////////FIN TABLA CASOS DE PRUEBA////////////////
             List<Risk> risks = await (from uh in _context.UserHistory
                                               join tc in _context.Risk on uh.IdUserHistory equals tc.UserHistory.IdUserHistory
-                                              where uh.SprintHistoryUser.IdSprint == user.IdSprintActive
-                                              select tc).ToListAsync();
+                                              where uh.SprintHistoryUser.IdSprint == user.IdSprintActive && uh.IsDeleted== false
+                                      select tc).ToListAsync();
 
             PdfPTable tableRisk = new PdfPTable(3);
             var tablerisktittle = new Paragraph("RIESGOS", FontBigTitle);
@@ -402,8 +405,8 @@ namespace TestingAppQa.Controllers
 
             List<Scope> scopes = await (from uh in _context.UserHistory
                                       join tc in _context.Scope on uh.IdUserHistory equals tc.UserHistory.IdUserHistory
-                                      where uh.SprintHistoryUser.IdSprint == user.IdSprintActive
-                                      select tc).ToListAsync();
+                                      where uh.SprintHistoryUser.IdSprint == user.IdSprintActive && uh.IsDeleted == false
+                                        select tc).ToListAsync();
 
             PdfPTable tableScope = new PdfPTable(3);
             var tablescopetittle = new Paragraph("RIESGOS", FontBigTitle);
@@ -427,7 +430,7 @@ namespace TestingAppQa.Controllers
 
             List<Tools> tools = await(from uh in _context.UserHistory
                                       join tc in _context.Tools on uh.IdUserHistory equals tc.UserHistory.IdUserHistory
-                                      where uh.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                      where uh.SprintHistoryUser.IdSprint == user.IdSprintActive && uh.IsDeleted == false
                                       select tc).ToListAsync();
 
             PdfPTable tableTools = new PdfPTable(3);
@@ -472,9 +475,9 @@ namespace TestingAppQa.Controllers
 
             ///////////////////////TABLA DE TAREAS
             document.Close();
-            // Close the writer instance  
+            // Close the writer instance
             writer.Close();
-            // Always close open filehandles explicity  
+            // Always close open filehandles explicity
             fs.Close();
 
 

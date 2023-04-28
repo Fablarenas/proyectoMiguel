@@ -70,7 +70,7 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Create([Bind("IdRisk,Name,MitigationStrategy,RiskDependency")] Risk risk)
         {
             var user = await _userManager.GetUserAsync(User);
-            var proyecto = _context.UserHistory.Find(user.IdProjectActive);
+            var proyecto = _context.UserHistory.Find(user.IdHUActive);
             risk.UserHistory = proyecto;
             if (ModelState.IsValid)
             {

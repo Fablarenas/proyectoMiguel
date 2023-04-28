@@ -28,7 +28,8 @@ namespace TestingAppQa.Controllers
             {
                 List<UserHistory> userHistories = await (from s in _context.UserHistory
                                                    where s.SprintHistoryUser.IdSprint == user.IdSprintActive
-                                                             select s).ToListAsync();
+                                                   && s.IsDeleted == false
+                                                   select s).ToListAsync();
                 return View(userHistories);
             }
             else
@@ -46,7 +47,7 @@ namespace TestingAppQa.Controllers
             }
 
             var userHistory = await _context.UserHistory
-                .FirstOrDefaultAsync(m => m.IdUserHistory == id);
+                .FirstOrDefaultAsync(m => m.IdUserHistory == id && m.IsDeleted == false);
             if (userHistory == null)
             {
                 return NotFound();
@@ -205,7 +206,8 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var userHistory = await _context.UserHistory.FindAsync(id);
-            _context.UserHistory.Remove(userHistory);
+            userHistory.IsDeleted = true;
+            _context.UserHistory.Update(userHistory);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

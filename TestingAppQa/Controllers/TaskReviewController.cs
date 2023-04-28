@@ -30,16 +30,17 @@ namespace TestingAppQa.Controllers
             List<TaskReview> data = await (from t in _context.TaskReview
                         join u in _context.UserHistory on t.History.IdUserHistory equals u.IdUserHistory
                         join s in _context.sprint on u.SprintHistoryUser.IdSprint equals s.IdSprint
-                        where s.IdSprint == useractive.IdSprintActive
-                        select t).ToListAsync();
+                        where s.IdSprint == useractive.IdSprintActive && u.IsDeleted == false
+                                           select t).ToListAsync();
 
             foreach (var item in data)
             {
                 UserHistory hu = await (from u in _context.UserHistory
-                                       join t in _context.TaskReview
-                                       on u.IdUserHistory equals t.History.IdUserHistory
-                                       where t.IdTask == item.IdTask
-                                       select u).SingleAsync();
+                                        join t in _context.TaskReview
+                                        on u.IdUserHistory equals t.History.IdUserHistory
+                                        where t.IdTask == item.IdTask
+                                        && u.IsDeleted == false
+                                        select u).SingleAsync();
                 string email = await (from t in _context.TaskReview
                                       join u in _context.user
                                         on t.ReponsabilityUser.Id equals u.Id
@@ -78,7 +79,7 @@ namespace TestingAppQa.Controllers
             var user = await _userManager.GetUserAsync(User);
 
             List<UserHistory> userHistories = await(from s in _context.UserHistory
-                                                        where s.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                                        where s.SprintHistoryUser.IdSprint == user.IdSprintActive && s.IsDeleted == false
                                                         select s).ToListAsync();
             var taks = new TaskReviewVm();
             taks.History = new List<SelectListItem>();
@@ -96,13 +97,13 @@ namespace TestingAppQa.Controllers
         public async Task<IActionResult> Create([Bind("Title, idhu, ReponsabilityUser, Description")] TaskReviewVm taskReview)
         {
             UserHistory userHistories = await (from s in _context.UserHistory
-                                               where s.IdUserHistory == taskReview.idhu
+                                               where s.IdUserHistory == taskReview.idhu && s.IsDeleted == false
                                                select s).SingleOrDefaultAsync();
 
             Sprint sprint = await (from u in _context.UserHistory
                                             join s in _context.sprint
                                             on u.SprintHistoryUser.IdSprint equals s.IdSprint
-                                            where u.IdUserHistory == taskReview.idhu
+                                            where u.IdUserHistory == taskReview.idhu && u.IsDeleted == false
                                             select s).SingleAsync();
 
             Project project = await (from p in _context.Project
@@ -145,13 +146,13 @@ namespace TestingAppQa.Controllers
 
 
             List<UserHistory> userHistories = await (from s in _context.UserHistory
-                                                     where s.SprintHistoryUser.IdSprint == user.IdSprintActive
+                                                     where s.SprintHistoryUser.IdSprint == user.IdSprintActive && s.IsDeleted == false
                                                      select s).ToListAsync();
 
             UserHistory hu = await (from u in _context.UserHistory
                                     join t in _context.TaskReview
-                                    on u.IdUserHistory equals t.History.IdUserHistory
-                                    where t.IdTask == id
+                                    on u.IdUserHistory equals t.History.IdUserHistory 
+                                    where t.IdTask == id && u.IsDeleted == false
                                     select u).SingleAsync();
 
             var taks = new TaskReviewVm();
@@ -192,13 +193,13 @@ namespace TestingAppQa.Controllers
             var taskReview = await _context.TaskReview.FindAsync(id);
 
             UserHistory userHistories = await (from s in _context.UserHistory
-                                               where s.IdUserHistory == taskRevie.idhu
+                                               where s.IdUserHistory == taskRevie.idhu && s.IsDeleted == false
                                                select s).SingleOrDefaultAsync();
 
             Sprint sprint = await (from u in _context.UserHistory
                                    join s in _context.sprint
                                    on u.SprintHistoryUser.IdSprint equals s.IdSprint
-                                   where u.IdUserHistory == taskRevie.idhu
+                                   where u.IdUserHistory == taskRevie.idhu && u.IsDeleted == false
                                    select s).SingleAsync();
 
             Project project = await (from p in _context.Project

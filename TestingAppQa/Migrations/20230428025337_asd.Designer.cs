@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestingAppQa.Data;
 
 namespace TestingAppQa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230428025337_asd")]
+    partial class asd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -607,9 +609,6 @@ namespace TestingAppQa.Migrations
 
                     b.Property<string>("IWant")
                         .HasColumnType("longtext");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<int?>("SprintHistoryUserIdSprint")
                         .HasColumnType("int");
