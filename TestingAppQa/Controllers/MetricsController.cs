@@ -294,7 +294,7 @@ namespace TestingAppQa.Controllers
 
             var project = await _context.Project.FindAsync(user.IdProjectActive);
 
-            var sprint = await _context.Project.FindAsync(user.IdSprintActive);
+            var sprint = await _context.sprint.FindAsync(user.IdSprintActive);
 
 
             Document document = new Document(PageSize.LETTER, -1, 0, 0, 0);
