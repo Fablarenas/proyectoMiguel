@@ -2,36 +2,36 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
-
-<h1>Edit</h1>
-
-<h4>Scope</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-12">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdScope" />
-            <div class="form-group">
-                <label asp-for="NameModule" class="control-label"></label>
+            <div class="modal-body">
+                <input type="hidden" asp-for="IdScope" />
+                <label asp-for="NameModule" class="control-label">Nombre modulo</label>
                 <input asp-for="NameModule" class="form-control" />
                 <span asp-validation-for="NameModule" class="text-danger"></span>
+                <label asp-for="Considerations" class="control-label">Consideraciones</label>
+                <input asp-for="Considerations" class="form-control" />
+                <span asp-validation-for="Considerations" class="text-danger"></span>
+                <label asp-for="TestGoal" class="control-label">Objetivo</label>
+                <input asp-for="TestGoal" class="form-control" />
+                <span asp-validation-for="TestGoal" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NameModule" class="control-label"></label>
-                <input asp-for="NameModule" class="form-control" />
-                <span asp-validation-for="NameModule" class="text-danger"></span>
+            <div class=" d-flex justify-content-between p-2 form-group">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Confirmar</button>
+
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="NameModule" class="control-label"></label>
-                <input asp-for="NameModule" class="form-control" />
-                <span asp-validation-for="NameModule" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
+        </form>
+        <form asp-controller="Scopes" asp-action="Delete" asp-route-id="@Model.IdScope" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">Borrar</button>
         </form>
     </div>
 </div>

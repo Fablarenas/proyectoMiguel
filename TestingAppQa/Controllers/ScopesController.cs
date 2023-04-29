@@ -61,7 +61,7 @@ namespace TestingAppQa.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTool,NameModule,TestGoal,Considerations")] Scope scope)
+        public async Task<IActionResult> Create([Bind("IdScope,NameModule,TestGoal,Considerations")] Scope scope)
         {
             var user = await _userManager.GetUserAsync(User);
             UserHistory project = await (from a in _context.UserHistory
@@ -98,7 +98,7 @@ namespace TestingAppQa.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTool,Name,Version,Specification")] Scope scope)
+        public async Task<IActionResult> Edit(int id,[Bind("IdScope,NameModule,TestGoal,Considerations")] Scope scope)
         {
             if (id != scope.IdScope)
             {
